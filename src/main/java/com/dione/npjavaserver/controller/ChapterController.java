@@ -1,7 +1,7 @@
 package com.dione.npjavaserver.controller;
 
-import com.dione.npserver.model.Chapter;
-import com.dione.npserver.repository.ChapterRepository;
+import com.dione.npjavaserver.model.Chapter;
+import com.dione.npjavaserver.repository.ChapterRepository;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;

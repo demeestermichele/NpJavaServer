@@ -2,12 +2,14 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,19 +33,15 @@ public class Chapter implements Serializable {
      * A chapter can have multiple plots, characters, etc..
      * When in danger of recursion choose to display ID of Mapping
      **/
-    @ManyToMany(mappedBy = "chapter")
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
+    @ManyToMany(mappedBy = "chapterSet", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Character> characterSet = new HashSet<>();
+    private Set<Charac> characterSet = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "chapter")
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
-    @JsonIgnore
-    private Set<Plot> plotSet = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
+    @JsonIdentityReference(alwaysAsId = true)
+    @JoinTable(name = "chapter_plots",joinColumns = @JoinColumn(name = "chapter_id"),
+            inverseJoinColumns = @JoinColumn(name = "plot_id"))
+    private Set<Plot> plotSet = new LinkedHashSet<>();
 
 
 
@@ -104,11 +102,11 @@ public class Chapter implements Serializable {
         this.description = description;
     }
 
-    public Set<Character> getCharacterSet() {
+    public Set<Charac> getCharacterSet() {
         return characterSet;
     }
 
-    public void setCharacterSet(Set<Character> characterSet) {
+    public void setCharacterSet(Set<Charac> characterSet) {
         this.characterSet = characterSet;
     }
 

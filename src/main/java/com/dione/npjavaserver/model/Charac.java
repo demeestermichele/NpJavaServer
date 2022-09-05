@@ -1,6 +1,7 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Character")
-public class Character implements Serializable {
+public class Charac implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,16 +22,6 @@ public class Character implements Serializable {
     private Role role;
 
 
- /*   *//**
-     * Characters can have/belong to one or more ethnicities
-     **//*
-    @ManyToMany
-    @JoinTable(
-            name = "ethnicity_characters",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "ethnicity_id"))
-    private List<Ethnicity> ethnicity;
-*/
     /**
      * One mother (character.Sex == FEMALE) can have multiple children
      **/
@@ -39,7 +30,7 @@ public class Character implements Serializable {
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JoinColumn(name = "mother", nullable = true)
-    private Character mother;
+    private Charac mother;
 
     /**
      * One father (character.Sex == MALE) can have many children
@@ -49,43 +40,44 @@ public class Character implements Serializable {
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JoinColumn(name = "father", nullable = true)
-    private Character father;
+    private Charac father;
 
 
     /**
      * A character can be in multiple plots, chapters, etc..
      * When in danger of recursion choose to display ID of Mapping
      **/
-    @ManyToMany(mappedBy = "character") //this model maps the chapters
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
+
+    @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
+    @JsonIdentityReference(alwaysAsId = true)
+    @JoinTable(name = "characters_chapters", joinColumns = @JoinColumn(name = "charac_id"),
+    inverseJoinColumns = @JoinColumn(name = "chapter_id"))
     private Set<Chapter> chapterSet = new HashSet<>();
 
-    @ManyToMany(mappedBy = "character") //this model maps the chapters
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
+    @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
+    @JsonIdentityReference(alwaysAsId = true)
+    @JoinTable(name = "characters_plots",joinColumns = @JoinColumn(name = "charac_id"),
+            inverseJoinColumns = @JoinColumn(name = "plot_id"))
     private Set<Plot> plotSet = new HashSet<>();
 
     /**
      * Constructors
      **/
-    public Character() {
+    public Charac() {
     }
 
-    public Character(Integer id) {
+    public Charac(Integer id) {
         this.id = id;
     }
 
-    public Character(String firstName, String lastName, Sex sex, Role role) {
+    public Charac(String firstName, String lastName, Sex sex, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
         this.role = role;
     }
 
-    public Character(Integer id, String firstName, String lastName, Sex sex, Role role, Character mother, Character father) {
+    public Charac(Integer id, String firstName, String lastName, Sex sex, Role role, Charac mother, Charac father) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -138,19 +130,19 @@ public class Character implements Serializable {
         this.role = role;
     }
 
-    public Character getMother() {
+    public Charac getMother() {
         return mother;
     }
 
-    public void setMother(Character mother) {
+    public void setMother(Charac mother) {
         this.mother = mother;
     }
 
-    public Character getFather() {
+    public Charac getFather() {
         return father;
     }
 
-    public void setFather(Character father) {
+    public void setFather(Charac father) {
         this.father = father;
     }
 

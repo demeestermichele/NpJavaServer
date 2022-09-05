@@ -1,12 +1,14 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -25,19 +27,26 @@ public class Plot implements Serializable {
      * A plot can have multiple characters, chapters, etc..
      * When in danger of recursion choose to display ID of Mapping
      **/
-    @ManyToMany(mappedBy = "plot") //this model maps the chapters
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
+    @ManyToMany(mappedBy = "plotSet") //this model maps the chapters
+    @JsonIdentityReference(alwaysAsId = true)
     @JsonIgnore
-    private Set<Chapter> chapterSet = new HashSet<>();
+    private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "plot") //this model maps the chapters
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
+    @ManyToMany(mappedBy = "chapterSet", cascade = CascadeType.ALL)
+    @JsonIdentityReference(alwaysAsId = true)
     @JsonIgnore
-    private Set<Character> characterSet = new HashSet<>();
+    private Set<Charac> characterSet = new LinkedHashSet<>();
+
+
+    public Plot() {
+    }
+
+    public Plot(Integer id, String name, String description, float revision) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.revision = revision;
+    }
 
     public Integer getId() {
         return id;
@@ -79,11 +88,11 @@ public class Plot implements Serializable {
         this.chapterSet = chapterSet;
     }
 
-    public Set<Character> getCharacterSet() {
+    public Set<Charac> getCharacterSet() {
         return characterSet;
     }
 
-    public void setCharacterSet(Set<Character> characterSet) {
+    public void setCharacterSet(Set<Charac> characterSet) {
         this.characterSet = characterSet;
     }
 }

@@ -1,8 +1,9 @@
 package com.dione.npjavaserver.controller;
 
-import com.dione.npserver.model.Role;
-import com.dione.npserver.model.Sex;
-import com.dione.npserver.repository.CharacterRepository;
+import com.dione.npjavaserver.model.Charac;
+import com.dione.npjavaserver.model.Role;
+import com.dione.npjavaserver.model.Sex;
+import com.dione.npjavaserver.repository.CharacRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,64 +15,42 @@ import java.util.Set;
 public class CharacterController {
 
     @Autowired
-    private CharacterRepository characterRepository;
+    private CharacRepository characRepository;
 
     @PostMapping("/add")
     public String addCharacter(@RequestParam String first, @RequestParam String last, @RequestParam Role role, @RequestParam Sex sex) {
-        Character character = new Character();
+        Charac character = new Charac();
         character.setFirstName(first);
         character.setLastName(last);
         character.setRole(role);
         character.setSex(sex);
-        characterRepository.save(character);
+        characRepository.save(character);
         return "Added new character to repo!";
     }
 
     @GetMapping("/list")
-    public Iterable<Character> getCharacters() {
-        return characterRepository.findAll();
+    public Set<Charac> getCharacters() {return (Set<Charac>) characRepository.findAll();
     }
 
 
     @GetMapping("/{id}")
-    public Character findCharacterById(@PathVariable Integer id) {
-        return characterRepository.findCharacterById(id);
+    public Charac findCharacterById(@PathVariable Integer id) {
+        return characRepository.findCharacById(id);
     }
 
-/*
-
-    @GetMapping("/dto/{id}")
-    public CharacterDto characterDto(@PathVariable Integer id) {
-        Character character = characterRepository.findCharacterById(id);
-        return new CharacterDto(character);
-    }
-*/
-
-// FIXME list is empty
     /**
-     * get a list of all Character DTOs
-     */
-  /*  @GetMapping("/dto/list")
-    public List<CharacterDto> getAllCharacterDtos() {
-        Iterable<Character> characterList = characterRepository.findAll();
-        List<CharacterDto> characterDtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.map(characterList, characterDtos);
-        return characterDtos;
-    }
-*/
-
-    /**find all characters with the same mother id ***/
+     * find all characters with the same mother id
+     ***/
     @GetMapping("/{id}/children")
-    public Set<Character> getChildren(@PathVariable Integer id) {
+    public Set<Charac> getChildren(@PathVariable Integer id) {
         if (
                 findCharacterById(id).getSex() == Sex.FEMALE
         ) {
-            return characterRepository.findCharactersByMother(characterRepository.findCharacterById(id));
+            return characRepository.findCharacsByMother(characRepository.findCharacById(id));
         } else if (
                 findCharacterById(id).getSex() == Sex.MALE
         ) {
-            return characterRepository.findCharactersByFather(characterRepository.findCharacterById(id));
+            return characRepository.findCharacsByFather(characRepository.findCharacById(id));
         }else {
             return null;
         }
