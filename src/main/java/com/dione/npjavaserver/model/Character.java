@@ -1,0 +1,188 @@
+package com.dione.npjavaserver.model;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "Character")
+public class Character implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private Sex sex;
+    private Role role;
+
+
+ /*   *//**
+     * Characters can have/belong to one or more ethnicities
+     **//*
+    @ManyToMany
+    @JoinTable(
+            name = "ethnicity_characters",
+            joinColumns = @JoinColumn(name = "character_id"),
+            inverseJoinColumns = @JoinColumn(name = "ethnicity_id"))
+    private List<Ethnicity> ethnicity;
+*/
+    /**
+     * One mother (character.Sex == FEMALE) can have multiple children
+     **/
+    @ManyToOne
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JoinColumn(name = "mother", nullable = true)
+    private Character mother;
+
+    /**
+     * One father (character.Sex == MALE) can have many children
+     **/
+    @ManyToOne
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JoinColumn(name = "father", nullable = true)
+    private Character father;
+
+
+    /**
+     * A character can be in multiple plots, chapters, etc..
+     * When in danger of recursion choose to display ID of Mapping
+     **/
+    @ManyToMany(mappedBy = "character") //this model maps the chapters
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    private Set<Chapter> chapterSet = new HashSet<>();
+
+    @ManyToMany(mappedBy = "character") //this model maps the chapters
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    private Set<Plot> plotSet = new HashSet<>();
+
+    /**
+     * Constructors
+     **/
+    public Character() {
+    }
+
+    public Character(Integer id) {
+        this.id = id;
+    }
+
+    public Character(String firstName, String lastName, Sex sex, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.role = role;
+    }
+
+    public Character(Integer id, String firstName, String lastName, Sex sex, Role role, Character mother, Character father) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.role = role;
+        this.mother = mother;
+        this.father = father;
+    }
+
+    /**
+     * Getters and setters
+     **/
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Character getMother() {
+        return mother;
+    }
+
+    public void setMother(Character mother) {
+        this.mother = mother;
+    }
+
+    public Character getFather() {
+        return father;
+    }
+
+    public void setFather(Character father) {
+        this.father = father;
+    }
+
+    public Set<Chapter> getChapterSet() {
+        return chapterSet;
+    }
+
+    public void setChapterSet(Set<Chapter> chapterSet) {
+        this.chapterSet = chapterSet;
+    }
+
+    public Set<Plot> getPlotSet() {
+        return plotSet;
+    }
+
+    public void setPlotSet(Set<Plot> plotSet) {
+        this.plotSet = plotSet;
+    }
+
+    /**
+     * ToString
+     **/
+    @Override
+    public String toString() {
+        return "Character{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", sex=" + sex +
+                ", role=" + role +
+                ", mother=" + mother +
+                ", father=" + father +
+                '}';
+    }
+}
