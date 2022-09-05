@@ -20,12 +20,10 @@ public class Chapter implements Serializable {
     private String name;
 
     private Integer number;
-/*
 
     private float version;
 
     private String description;
-*/
 
 
     /**
@@ -63,8 +61,8 @@ public class Chapter implements Serializable {
         this.id = id;
         this.name = name;
         this.number = number;
-/*        this.version = version;
-        this.description = description;*/
+        this.version = version;
+        this.description = description;
     }
 
     /**Getters and Setters**/
@@ -92,7 +90,7 @@ public class Chapter implements Serializable {
         this.number = number;
     }
 
-/*    public float getVersion() {
+    public float getVersion() {
         return version;
     }
 
@@ -106,7 +104,7 @@ public class Chapter implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }*/
+    }
 
     public Set<Charac> getCharacterSet() {
         return characterSet;
@@ -131,8 +129,8 @@ public class Chapter implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", number=" + number +
-/*                ", version=" + version +
-                ", description='" + description + '\'' +*/
+                ", version=" + version +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
