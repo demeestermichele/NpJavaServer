@@ -1,9 +1,6 @@
 package com.dione.npjavaserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,12 +26,18 @@ public class Plot implements Serializable {
      **/
     @ManyToMany(mappedBy = "plotSet") //this model maps the chapters
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIgnore
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonBackReference
     private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "chapterSet", cascade = CascadeType.ALL)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIgnore
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonBackReference
     private Set<Charac> characterSet = new LinkedHashSet<>();
 
 

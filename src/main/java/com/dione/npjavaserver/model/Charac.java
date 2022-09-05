@@ -2,11 +2,13 @@ package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -29,6 +31,7 @@ public class Charac implements Serializable {
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
+    @JsonManagedReference
     @JoinColumn(name = "mother", nullable = true)
     private Charac mother;
 
@@ -39,6 +42,7 @@ public class Charac implements Serializable {
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
+    @JsonManagedReference
     @JoinColumn(name = "father", nullable = true)
     private Charac father;
 
@@ -49,16 +53,22 @@ public class Charac implements Serializable {
      **/
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonManagedReference
     @JoinTable(name = "characters_chapters", joinColumns = @JoinColumn(name = "charac_id"),
     inverseJoinColumns = @JoinColumn(name = "chapter_id"))
-    private Set<Chapter> chapterSet = new HashSet<>();
+    private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonManagedReference
     @JoinTable(name = "characters_plots",joinColumns = @JoinColumn(name = "charac_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
-    private Set<Plot> plotSet = new HashSet<>();
+    private Set<Plot> plotSet = new LinkedHashSet<>();
 
     /**
      * Constructors

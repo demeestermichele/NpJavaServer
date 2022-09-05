@@ -1,10 +1,7 @@
 /**Chapter model by demeestermichele**/
 package com.dione.npjavaserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,10 +20,12 @@ public class Chapter implements Serializable {
     private String name;
 
     private Integer number;
+/*
 
     private float version;
 
     private String description;
+*/
 
 
     /**
@@ -34,11 +33,18 @@ public class Chapter implements Serializable {
      * When in danger of recursion choose to display ID of Mapping
      **/
     @ManyToMany(mappedBy = "chapterSet", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonBackReference
     private Set<Charac> characterSet = new LinkedHashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
     @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     @JoinTable(name = "chapter_plots",joinColumns = @JoinColumn(name = "chapter_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
     private Set<Plot> plotSet = new LinkedHashSet<>();
@@ -57,8 +63,8 @@ public class Chapter implements Serializable {
         this.id = id;
         this.name = name;
         this.number = number;
-        this.version = version;
-        this.description = description;
+/*        this.version = version;
+        this.description = description;*/
     }
 
     /**Getters and Setters**/
@@ -86,7 +92,7 @@ public class Chapter implements Serializable {
         this.number = number;
     }
 
-    public float getVersion() {
+/*    public float getVersion() {
         return version;
     }
 
@@ -100,7 +106,7 @@ public class Chapter implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
+    }*/
 
     public Set<Charac> getCharacterSet() {
         return characterSet;
@@ -125,8 +131,8 @@ public class Chapter implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", number=" + number +
-                ", version=" + version +
-                ", description='" + description + '\'' +
+/*                ", version=" + version +
+                ", description='" + description + '\'' +*/
                 '}';
     }
 }
