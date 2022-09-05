@@ -15,7 +15,7 @@ import java.util.Set;
 public class Chapter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -39,12 +39,12 @@ public class Chapter implements Serializable {
     private Set<Charac> characterSet = new LinkedHashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
-    @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JoinTable(name = "chapter_plots",joinColumns = @JoinColumn(name = "chapter_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
+    @JsonManagedReference
     private Set<Plot> plotSet = new LinkedHashSet<>();
 
 
@@ -53,11 +53,11 @@ public class Chapter implements Serializable {
     public Chapter() {
     }
 
-    public Chapter(Long id) {
+    public Chapter(Integer id) {
         this.id = id;
     }
 
-    public Chapter(Long id, String name, Integer number, float version, String description, List<Character> charactersList) {
+    public Chapter(Integer id, String name, Integer number, float version, String description) {
         this.id = id;
         this.name = name;
         this.number = number;
@@ -66,11 +66,11 @@ public class Chapter implements Serializable {
     }
 
     /**Getters and Setters**/
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

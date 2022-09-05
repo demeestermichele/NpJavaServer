@@ -25,7 +25,6 @@ public class Plot implements Serializable {
      * When in danger of recursion choose to display ID of Mapping
      **/
     @ManyToMany(mappedBy = "plotSet") //this model maps the chapters
-    @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
@@ -33,7 +32,6 @@ public class Plot implements Serializable {
     private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "chapterSet", cascade = CascadeType.ALL)
-    @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")

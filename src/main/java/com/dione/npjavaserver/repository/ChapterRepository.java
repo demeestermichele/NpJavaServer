@@ -7,11 +7,11 @@ import java.util.Set;
 
 public interface ChapterRepository extends CrudRepository<Chapter, Integer> {
 
-    public Chapter findChapterById(Long id);
+    public Chapter findChapterById(Integer id);
 
     public Set<Chapter> findChaptersByNameContaining(String name);
 
-    public Chapter findChaptersByNumber(float number);
+    public Chapter findChaptersByNumber(Integer chapterNumber);
 
 
 }

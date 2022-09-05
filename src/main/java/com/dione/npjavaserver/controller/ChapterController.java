@@ -22,7 +22,7 @@ public class ChapterController {
         Chapter chapter = new Chapter();
         chapter.setName(name);
         chapter.setNumber(number);
-//        chapter.setDescription(description);
+        chapter.setDescription(description);
         chapterRepository.save(chapter);
         return "Chapter added!";
     }
@@ -33,14 +33,14 @@ public class ChapterController {
         return chapterRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Chapter findChapterById(@PathVariable Long id) {
+    @GetMapping("/id/{id}")
+    public Chapter findChapterById(@PathVariable Integer id) {
         return chapterRepository.findChapterById(id);
     }
 
-    @GetMapping("/{number}")
-    public Chapter findChapterByNumber(@PathVariable float number) {
-        return chapterRepository.findChaptersByNumber(number);
+    @GetMapping("/number/{chapterNumber}")
+    public Chapter findChapterByNumber(@PathVariable Integer chapterNumber) {
+        return chapterRepository.findChaptersByNumber(chapterNumber);
     }
 
     @GetMapping("/{name}")
