@@ -5,8 +5,10 @@ import com.dione.npjavaserver.model.Role;
 import com.dione.npjavaserver.model.Sex;
 import com.dione.npjavaserver.repository.CharacRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -16,6 +18,11 @@ public class CharacterController {
 
     @Autowired
     private CharacRepository characRepository;
+    @GetMapping("/characterList")
+    public String showCharacterList(Model character){
+        character.addAttribute("characters", characRepository.findAll());
+        return "characterList";
+    }
 
     @PostMapping("/add")
     public String addCharacter(@RequestParam String first, @RequestParam String last, @RequestParam Role role, @RequestParam Sex sex) {
@@ -29,7 +36,7 @@ public class CharacterController {
     }
 
     @GetMapping("/list")
-    public Set<Charac> getCharacters() {return (Set<Charac>) characRepository.findAll();
+    public List<Charac> getCharacters() {return (List<Charac>) characRepository.findAll();
     }
 
 
