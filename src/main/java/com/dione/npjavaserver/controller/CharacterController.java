@@ -5,8 +5,10 @@ import com.dione.npjavaserver.model.Role;
 import com.dione.npjavaserver.model.Sex;
 import com.dione.npjavaserver.repository.CharacRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -16,20 +18,38 @@ public class CharacterController {
 
     @Autowired
     private CharacRepository characRepository;
+    @GetMapping("/characterList")
+    public String showCharacterList(Model character){
+        character.addAttribute("characters", characRepository.findAll());
+        return "characterList";
+    }
 
     @PostMapping("/add")
-    public String addCharacter(@RequestParam String first, @RequestParam String last, @RequestParam Role role, @RequestParam Sex sex) {
+    public String addCharacter(@RequestParam String first, @RequestParam String last, @RequestParam Role role, @RequestParam Sex sex, @RequestParam Charac mother, @RequestParam Charac father) {
         Charac character = new Charac();
         character.setFirstName(first);
         character.setLastName(last);
         character.setRole(role);
         character.setSex(sex);
+        //TODO well this isn't very PC. add "legal guardians"
+        if (mother.getSex() != Sex.FEMALE) {
+            character.setMother(mother);
+            return "The character you have chosen as mother is not female";
+        } else {
+            character.setMother(mother);
+        }
+        if (father.getSex() != Sex.MALE) {
+            character.setFather(father);
+            return "The character you have chosen as father is not male";
+        } else {
+            character.setFather(father);
+        }
         characRepository.save(character);
         return "Added new character to repo!";
     }
 
     @GetMapping("/list")
-    public Set<Charac> getCharacters() {return (Set<Charac>) characRepository.findAll();
+    public List<Charac> getCharacters() {return (List<Charac>) characRepository.findAll();
     }
 
 
@@ -51,7 +71,7 @@ public class CharacterController {
                 findCharacterById(id).getSex() == Sex.MALE
         ) {
             return characRepository.findCharacsByFather(characRepository.findCharacById(id));
-        }else {
+        } else {
             return null;
         }
 
