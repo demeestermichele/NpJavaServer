@@ -16,6 +16,8 @@ public class Charac implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Column(nullable = false)
     private String firstName;
     private String lastName;
     private Sex sex;
@@ -36,7 +38,7 @@ public class Charac implements Serializable {
 
     /**
      * One father (character.Sex == MALE) can have many children
-//     **/
+     **/
     //TODO make a difference between biological and effective parent
     @ManyToOne
     @JsonIdentityInfo(
@@ -49,7 +51,7 @@ public class Charac implements Serializable {
 
     /**
      * A character can be in multiple plots, chapters, etc..
-     * When in danger of recursion choose to display ID of Mapping
+     * When in danger of recursion choose to display ID
      **/
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
