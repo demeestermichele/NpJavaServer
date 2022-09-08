@@ -1,13 +1,11 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -27,6 +25,7 @@ public class Charac implements Serializable {
     /**
      * One mother (character.Sex == FEMALE) can have multiple children
      **/
+    //TODO make a difference between biological and effective parent
     @ManyToOne
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -37,7 +36,8 @@ public class Charac implements Serializable {
 
     /**
      * One father (character.Sex == MALE) can have many children
-     **/
+//     **/
+    //TODO make a difference between biological and effective parent
     @ManyToOne
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -58,7 +58,7 @@ public class Charac implements Serializable {
             property = "id")
     @JsonManagedReference
     @JoinTable(name = "characters_chapters", joinColumns = @JoinColumn(name = "charac_id"),
-    inverseJoinColumns = @JoinColumn(name = "chapter_id"))
+            inverseJoinColumns = @JoinColumn(name = "chapter_id"))
     private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
@@ -66,7 +66,7 @@ public class Charac implements Serializable {
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JsonManagedReference
-    @JoinTable(name = "characters_plots",joinColumns = @JoinColumn(name = "charac_id"),
+    @JoinTable(name = "characters_plots", joinColumns = @JoinColumn(name = "charac_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
     private Set<Plot> plotSet = new LinkedHashSet<>();
 
@@ -78,6 +78,10 @@ public class Charac implements Serializable {
 
     public Charac(Integer id) {
         this.id = id;
+    }
+
+    public Charac(String firstName) {
+        this.firstName = firstName;
     }
 
     public Charac(String firstName, String lastName, Sex sex, Role role) {

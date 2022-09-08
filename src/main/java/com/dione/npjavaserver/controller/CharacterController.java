@@ -25,12 +25,25 @@ public class CharacterController {
     }
 
     @PostMapping("/add")
-    public String addCharacter(@RequestParam String first, @RequestParam String last, @RequestParam Role role, @RequestParam Sex sex) {
+    public String addCharacter(@RequestParam String first, @RequestParam String last, @RequestParam Role role, @RequestParam Sex sex, @RequestParam Charac mother, @RequestParam Charac father) {
         Charac character = new Charac();
         character.setFirstName(first);
         character.setLastName(last);
         character.setRole(role);
         character.setSex(sex);
+        //TODO well this isn't very PC. add "legal guardians"
+        if (mother.getSex() != Sex.FEMALE) {
+            character.setMother(mother);
+            return "The character you have chosen as mother is not female";
+        } else {
+            character.setMother(mother);
+        }
+        if (father.getSex() != Sex.MALE) {
+            character.setFather(father);
+            return "The character you have chosen as father is not male";
+        } else {
+            character.setFather(father);
+        }
         characRepository.save(character);
         return "Added new character to repo!";
     }
@@ -58,7 +71,7 @@ public class CharacterController {
                 findCharacterById(id).getSex() == Sex.MALE
         ) {
             return characRepository.findCharacsByFather(characRepository.findCharacById(id));
-        }else {
+        } else {
             return null;
         }
 
