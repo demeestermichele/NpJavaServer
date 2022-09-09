@@ -23,7 +23,7 @@ public class CharacterController {
     @GetMapping("/characterList")
     public String showCharacterList(Model character) {
         character.addAttribute("characters", characRepository.findAll());
-        return "characterList";
+        return characRepository.findAll().toString();
     }
 
     @PostMapping("/add")
@@ -36,7 +36,7 @@ public class CharacterController {
             // String role1 = role.toString().toUpperCase();
             character.setRole(role);
         } catch (ConversionFailedException e) {
-            System.err.println(e);
+            System.err.println("Role needs to be in capitals" + e);
         }
         //TODO add gender
         try {
@@ -48,20 +48,70 @@ public class CharacterController {
 
         //TODO well this isn't very PC. add "legal guardians"
 
-        if (mother.getSex() != Sex.FEMALE) {
+        if (mother.getSex() == Sex.FEMALE) {
             character.setMother(mother);
         } else {
-            throw new Exception(mother.getId() + " is not female");
+            throw new Exception("Character with id= " + mother.getId() + " is not female");
         }
 
 
-        if (father.getSex() != Sex.MALE) {
+        if (father.getSex() == Sex.MALE) {
             character.setFather(father);
         } else {
-            throw new Exception(father.getId() + " is not male");
+            throw new Exception("Character with id= " + father.getId() + " is not male");
         }
         characRepository.save(character);
         return "Added new character to repo!";
+    }
+
+    @PostMapping("/patch")
+    public String patchCharacter(@RequestParam Integer id, @RequestParam String first, @RequestParam String last, @RequestParam Role role, @RequestParam Sex sex, @RequestParam Charac mother, @RequestParam Charac father) throws Exception {
+        Charac character = findCharacterById(id);
+        if (character == null) {
+            character = new Charac();
+            this.addCharacter(first, last, role, sex, mother, father);
+        } else {
+            if (character.getFirstName() != null) {
+                character.setFirstName(first);
+            }
+            if (character.getLastName() != null) {
+                character.setLastName(last);
+            }
+            if (character.getRole() != null) {
+                try {
+                    //do this in client
+                    // String role1 = role.toString().toUpperCase();
+                    character.setRole(role);
+                } catch (ConversionFailedException e) {
+                    System.err.println(e);
+                }
+            }
+            if (character.getSex() != null) {
+                try {
+                    character.setSex(sex);
+                } catch (Exception e) {
+                    System.err.println("error " + e);
+                    throw new Exception();
+                }
+            }
+            if (character.getMother() != null) {
+                if (mother.getSex() == Sex.FEMALE) {
+                    character.setMother(mother);
+                } else {
+                    throw new Exception(mother.getId() + " is not female");
+                }
+            }
+            if (character.getFather() != null) {
+                if (father.getSex() == Sex.MALE) {
+                    character.setFather(father);
+                } else {
+                    throw new Exception(father.getId() + " is not male");
+                }
+            }
+        }
+        characRepository.save(character);
+        return "Character updated";
+
     }
 
     @GetMapping("/list")

@@ -17,7 +17,6 @@ public class Charac implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false)
     private String firstName;
     private String lastName;
     private Sex sex;
