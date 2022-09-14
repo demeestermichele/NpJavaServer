@@ -9,6 +9,7 @@ public class Calendar {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    private String name;
     private Double years;
     private Double months;
     private Double weeks;

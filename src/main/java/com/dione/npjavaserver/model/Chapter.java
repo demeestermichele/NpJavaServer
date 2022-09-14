@@ -23,9 +23,9 @@ public class Chapter implements Serializable {
 /*
 
     private float version;
+*/
 
     private String description;
-*/
 
 
     /**
@@ -98,7 +98,7 @@ public class Chapter implements Serializable {
 
     public void setVersion(float version) {
         this.version = version;
-    }
+    }*/
 
     public String getDescription() {
         return description;
@@ -106,7 +106,7 @@ public class Chapter implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }*/
+    }
 
     public Set<Charac> getCharacterSet() {
         return characterSet;
