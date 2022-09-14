@@ -20,10 +20,8 @@ public class Chapter implements Serializable {
     private String name;
 
     private Integer number;
-/*
 
     private float version;
-*/
 
     private String description;
 
@@ -63,8 +61,8 @@ public class Chapter implements Serializable {
         this.id = id;
         this.name = name;
         this.number = number;
-/*        this.version = version;
-        this.description = description;*/
+        this.version = version;
+        this.description = description;
     }
 
     /**Getters and Setters**/
@@ -92,13 +90,13 @@ public class Chapter implements Serializable {
         this.number = number;
     }
 
-/*    public float getVersion() {
+    public float getVersion() {
         return version;
     }
 
     public void setVersion(float version) {
         this.version = version;
-    }*/
+    }
 
     public String getDescription() {
         return description;
