@@ -9,6 +9,7 @@ import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -165,14 +166,20 @@ public class CharacterController {
     }
 
     /**
-     * find all characters with the same mother id
-     ***/
+     * find all characters with the same parent id
+     * @param id of the character whose kids we want to find
+     * @return
+     */
     @GetMapping("/{id}/children")
     public Set<Charac> getChildren(@PathVariable Integer id) {
         if (findCharacterById(id).getSex() == Sex.FEMALE) {
             return characRepository.findCharacsByMother(characRepository.findCharacById(id));
         } else if (findCharacterById(id).getSex() == Sex.MALE) {
             return characRepository.findCharacsByFather(characRepository.findCharacById(id));
+        }else if( findCharacterById(id).getSex() == Sex.THERIAN){
+            Set<Charac> charSex = characRepository.findCharacsByFather(characRepository.findCharacById(id));
+            charSex.addAll(characRepository.findCharacsByMother(characRepository.findCharacById(id)));
+            return charSex;
         } else {
             return null;
         }
