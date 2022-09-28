@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 @RestController
@@ -26,6 +27,8 @@ public class CalendarCalculationController {
     @PostMapping("/add")
     public String addCalculation(@RequestParam String name, @RequestParam String description, @RequestParam Calendar calendar1, @RequestParam Calendar calendar2) throws Exception {
         CalendarCalculation calculation = new CalendarCalculation();
+        Scanner keyboard = new Scanner(System.in);
+
         calculation.setCalendar1(calendar1);
         calculation.setCalendar2(calendar2);
         try {
@@ -38,5 +41,6 @@ public class CalendarCalculationController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return "Calculations added";
     }
 }

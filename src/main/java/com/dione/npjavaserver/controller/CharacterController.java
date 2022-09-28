@@ -9,7 +9,6 @@ import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -168,7 +167,7 @@ public class CharacterController {
     /**
      * find all characters with the same parent id
      * @param id of the character whose kids we want to find
-     * @return
+     * @return list of characters from the id of parent
      */
     @GetMapping("/{id}/children")
     public Set<Charac> getChildren(@PathVariable Integer id) {

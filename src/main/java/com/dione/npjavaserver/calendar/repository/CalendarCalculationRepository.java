@@ -8,6 +8,5 @@ import java.util.Set;
 public interface CalendarCalculationRepository extends CrudRepository<CalendarCalculation, Double> {
     Set<CalendarCalculation> findAllById(Long id);
 
-//    CalendarCalculation
 
 }
