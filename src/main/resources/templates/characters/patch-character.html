@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<form action="/characters/patch" method="POST">
+<form action="../characters/patch" method="POST">
     <p>Let's add a character.</p>
     <div>
         <label for="id">id:</label>
@@ -40,14 +40,14 @@
     </div>
 </form>
 
-<form action="characterList.html" method="GET">
+<form action="character-list.html" method="GET">
     <button>List characters</button>
     <output name="charID" for="id"></data></output>
 </form>
-<button>
-    <a href="characterId.html">character search</a>
-</button>
-<form action="patchCharacter.html" method="GET">
+<!--<button>
+    <a href="character-id.html">character search</a>
+</button>-->
+<form action="../characters/patch-character.html" method="GET">
     <button>Patch character</button>
     <label id="patch">ID</label>
     <output name="patchId" for="patch"></data></output>

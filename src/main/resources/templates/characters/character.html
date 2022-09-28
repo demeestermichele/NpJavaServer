@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Character</title>
+    <meta http-equiv="x-ua-compatible" content="text/html; charset=UTF-8; ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/shards.min.css">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Character </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+
+            <a th:text="${#charac.id}"> ID </a>
+            <a th:text="${#charac.firstName}"> First Name </a>
+            <a th:text="${#charac.lastName}"> Last Name </a>
+            <a th:text="${#charac.role}"></a>
+            <a th:text="${#charac.sex}"></a>
+            <a th:text="${#charac.mother}"></a>
+            <a th:text="${#charac.father}"></a>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

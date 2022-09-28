@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Characters</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Characters </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> First Name </th>
+                    <th> Last Name </th>
+                    <th> Role </th>
+                    <th> Sex </th>
+                    <th> Mother </th>
+                    <th> Father </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${characters.empty}">
+                    <td colspan="2"> No Characters Stored </td>
+                </tr>
+                <tr th:each="charac : ${characters}">
+                    <td><span th:text="${charac.id}"> ID </span></td>
+                    <td><span th:text="${charac.firstName}"> First Name </span></td>
+                    <td><span th:text="${charac.lastName}"> Last Name </span></td>
+                    <td><span th:text="${charac.role}"></span></td>
+                    <td><span th:text="${charac.sex}"></span></td>
+                    <!-- FIXME character's parent's firstname only
+                    th:href="@{/characters/characterList}"
+                    -->
+                    <td><span th:text="${charac.mother}"></span></td>
+                   <td><span th:text="${charac.father}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <a class="btn btn-success" href="#" th:href="@{/characters/add}"> Add Character </a>
+            <a class="btn btn-primary" href="#" th:href="@{/characters/patch}" th:classappend="${charac.empty} ? 'disabled' : ''"> Edit Character </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
