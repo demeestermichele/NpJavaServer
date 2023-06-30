@@ -22,7 +22,7 @@ public class CharacController {
      * List of all Characters
      **/
     @GetMapping("/")
-    public ResponseEntity<List<CharacDto>> getAll() {
+    public ResponseEntity<List<CharacDto>> getAll() throws ChangeSetPersister.NotFoundException {
         List<CharacDto> characDTOs = characService.getAll();
         return ResponseEntity.ok(characDTOs);
     }
@@ -45,7 +45,7 @@ public class CharacController {
      * Create 1 Character
      **/
     @PostMapping("")
-    public ResponseEntity<CharacDto> createCharac(@RequestBody CharacDto characDto) {
+    public ResponseEntity<CharacDto> createCharac(@RequestBody CharacDto characDto) throws ChangeSetPersister.NotFoundException {
         CharacDto createdCharacDto = characService.createCharac(characDto);
         return ResponseEntity.created(URI.create("/charac/" + createdCharacDto.getId())).body(createdCharacDto);
     }

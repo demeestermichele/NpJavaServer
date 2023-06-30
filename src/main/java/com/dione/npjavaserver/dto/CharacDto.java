@@ -14,12 +14,23 @@ public class CharacDto implements Serializable {
     private String firstName;
     private String lastName;
     private Sex sex;
+    private CharacDto father;
+    private CharacDto mother;
 
     public CharacDto(Long id, String firstName, String lastName, Sex sex) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
+    }
+
+    public CharacDto(Long id, String firstName, String lastName, Sex sex, CharacDto father, CharacDto mother) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.father = father;
+        this.mother = mother;
     }
 
     public CharacDto() {
@@ -58,6 +69,22 @@ public class CharacDto implements Serializable {
         this.sex = sex;
     }
 
+    public CharacDto getFather() {
+        return father;
+    }
+
+    public void setFather(CharacDto father) {
+        this.father = father;
+    }
+
+    public CharacDto getMother() {
+        return mother;
+    }
+
+    public void setMother(CharacDto mother) {
+        this.mother = mother;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,4 +107,7 @@ public class CharacDto implements Serializable {
                 "lastName = " + lastName + ", " +
                 "sex = " + sex + ")";
     }
+
+
+
 }
