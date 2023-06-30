@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/chapters")
+@RequestMapping("/chapter")
 @CrossOrigin(origins = "*")
 public class ChapterController {
 
@@ -27,7 +27,7 @@ public class ChapterController {
         return "Chapter added!";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/all")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public Iterable<Chapter> getChapters() {
         return chapterRepository.findAll();
