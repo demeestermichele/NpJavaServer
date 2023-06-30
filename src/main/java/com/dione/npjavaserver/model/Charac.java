@@ -10,12 +10,12 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Character")
+@Table(name = "CHARACTER")
 public class Charac implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String firstName;
     private String lastName;
@@ -24,7 +24,7 @@ public class Charac implements Serializable {
 
 
     /**
-     * One mother (character.Sex == FEMALE) can have multiple children
+     * One mother (character.Sex == FEMALE || or index 1) can have multiple children
      **/
     //TODO make a difference between biological and effective parent
     @ManyToOne
@@ -36,7 +36,7 @@ public class Charac implements Serializable {
     private Charac mother;
 
     /**
-     * One father (character.Sex == MALE) can have many children
+     * One father (character.Sex == MALE || or index 0) can have many children
      **/
     //TODO make a difference between biological and effective parent
     @ManyToOne
@@ -77,7 +77,7 @@ public class Charac implements Serializable {
     public Charac() {
     }
 
-    public Charac(Integer id) {
+    public Charac(Long id) {
         this.id = id;
     }
 
@@ -92,7 +92,7 @@ public class Charac implements Serializable {
         this.role = role;
     }
 
-    public Charac(Integer id, String firstName, String lastName, Sex sex, Role role, Charac mother, Charac father) {
+    public Charac(Long id, String firstName, String lastName, Sex sex, Role role, Charac mother, Charac father) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -105,11 +105,11 @@ public class Charac implements Serializable {
     /**
      * Getters and setters
      **/
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
