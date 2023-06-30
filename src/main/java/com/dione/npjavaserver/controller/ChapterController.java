@@ -32,7 +32,7 @@ public class ChapterController {
     public Iterable<Chapter> getChapters() {
         return chapterRepository.findAll();
     }
-
+/*
     @GetMapping("/{id}")
     public Chapter findChapterById(@PathVariable Long id) {
         return chapterRepository.findChapterById(id);
@@ -46,6 +46,6 @@ public class ChapterController {
     @GetMapping("/{name}")
     public Set<Chapter> findChapterByName(@PathVariable String name){
         return chapterRepository.findChaptersByNameContaining(name);
-    }
+    }*/
 
 }
