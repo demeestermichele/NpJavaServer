@@ -1,6 +1,6 @@
 package com.dione.npjavaserver.service;
 
-import com.dione.npjavaserver.dao.CharacDao;
+import com.dione.npjavaserver.dao.CharacDAO;
 import com.dione.npjavaserver.dto.CharacDto;
 import com.dione.npjavaserver.model.Charac;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CharacServiceImpl implements CharacService {
 
     @Autowired
-    private CharacDao characDao;
+    private CharacDAO characDao;
 
 
     @Override

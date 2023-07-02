@@ -2,6 +2,8 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,11 +21,15 @@ public class Chapter implements Serializable {
 
     private String name;
 
+    @Nullable
     private Integer number;
 
+    @Column(nullable = false, columnDefinition = "integer default 1")
     private float version;
 
     private String description;
+
+    private Book book;
 
 
     /**
@@ -57,12 +63,13 @@ public class Chapter implements Serializable {
         this.id = id;
     }
 
-    public Chapter(Long id, String name, Integer number, float version, String description, List<Character> charactersList) {
+    public Chapter(Long id, String name, Integer number, float version, String description, Book book) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.version = version;
         this.description = description;
+        this.book = book;
     }
 
     /**Getters and Setters**/
@@ -120,6 +127,14 @@ public class Chapter implements Serializable {
 
     public void setPlotSet(Set<Plot> plotSet) {
         this.plotSet = plotSet;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     /**To String**/
