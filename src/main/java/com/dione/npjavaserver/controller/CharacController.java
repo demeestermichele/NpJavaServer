@@ -1,6 +1,6 @@
 package com.dione.npjavaserver.controller;
 
-import com.dione.npjavaserver.dto.CharacDto;
+import com.dione.npjavaserver.dto.CharacDTO;
 import com.dione.npjavaserver.service.CharacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -22,8 +22,8 @@ public class CharacController {
      * List of all Characters
      **/
     @GetMapping("/")
-    public ResponseEntity<List<CharacDto>> getAll() throws ChangeSetPersister.NotFoundException {
-        List<CharacDto> characDTOs = characService.getAll();
+    public ResponseEntity<List<CharacDTO>> getAll() {
+        List<CharacDTO> characDTOs = characService.getAll();
         return ResponseEntity.ok(characDTOs);
     }
 
@@ -31,8 +31,8 @@ public class CharacController {
      * Get 1 Character using ID
      **/
     @GetMapping("/{id}")
-    public ResponseEntity<CharacDto> getCharacById(@PathVariable Long id) {
-        CharacDto characDto = null;
+    public ResponseEntity<CharacDTO> getCharacById(@PathVariable Long id) {
+        CharacDTO characDto = null;
         try {
             characDto = characService.getCharacById(id);
         } catch (ChangeSetPersister.NotFoundException e) {
@@ -44,9 +44,9 @@ public class CharacController {
     /**
      * Create 1 Character
      **/
-    @PostMapping("")
-    public ResponseEntity<CharacDto> createCharac(@RequestBody CharacDto characDto) throws ChangeSetPersister.NotFoundException {
-        CharacDto createdCharacDto = characService.createCharac(characDto);
+    @PostMapping("/create")
+    public ResponseEntity<CharacDTO> createCharac(@RequestBody CharacDTO characDto) {
+        CharacDTO createdCharacDto = characService.createCharac(characDto);
         return ResponseEntity.created(URI.create("/charac/" + createdCharacDto.getId())).body(createdCharacDto);
     }
 
@@ -54,8 +54,8 @@ public class CharacController {
      * Update 1 Character after finding ID
      **/
     @PutMapping("/{id}")
-    public ResponseEntity<CharacDto> updateCharac(@PathVariable Long id, @RequestBody CharacDto characDto) {
-        CharacDto updatedCharacDto = null;
+    public ResponseEntity<CharacDTO> updateCharac(@PathVariable Long id, @RequestBody CharacDTO characDto) {
+        CharacDTO updatedCharacDto = null;
         try {
             updatedCharacDto = characService.updateCharac(id, characDto);
         } catch (ChangeSetPersister.NotFoundException e) {

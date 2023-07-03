@@ -1,23 +1,18 @@
 package com.dione.npjavaserver.service;
 
-import com.dione.npjavaserver.dto.CharacDto;
-import com.dione.npjavaserver.model.Charac;
+import com.dione.npjavaserver.dto.CharacDTO;
 import org.springframework.data.crossstore.ChangeSetPersister;
 
 import java.util.List;
 
 public interface CharacService {
-    List<CharacDto> getAll() throws ChangeSetPersister.NotFoundException;
+    List<CharacDTO> getAll();
 
-    CharacDto getMotherById(Long id) throws ChangeSetPersister.NotFoundException;
-    CharacDto getFatherById(Long id) throws ChangeSetPersister.NotFoundException;
+    CharacDTO getCharacById(Long id) throws ChangeSetPersister.NotFoundException;
 
-    CharacDto getCharacById(Long id) throws ChangeSetPersister.NotFoundException;
+    CharacDTO createCharac(CharacDTO characDto);
 
-    CharacDto createCharac(CharacDto characDto) throws ChangeSetPersister.NotFoundException;
-
-    CharacDto updateCharac(Long id, CharacDto characDto) throws ChangeSetPersister.NotFoundException;
+    CharacDTO updateCharac(Long id, CharacDTO characDto) throws ChangeSetPersister.NotFoundException;
 
     void deleteCharac(Long id) throws ChangeSetPersister.NotFoundException;
-
 }

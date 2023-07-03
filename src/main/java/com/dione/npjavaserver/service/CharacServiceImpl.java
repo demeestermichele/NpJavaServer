@@ -1,7 +1,7 @@
 package com.dione.npjavaserver.service;
 
-import com.dione.npjavaserver.dao.CharacDao;
-import com.dione.npjavaserver.dto.CharacDto;
+import com.dione.npjavaserver.dao.CharacDAO;
+import com.dione.npjavaserver.dto.CharacDTO;
 import com.dione.npjavaserver.model.Charac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -14,109 +14,61 @@ import java.util.List;
 public class CharacServiceImpl implements CharacService {
 
     @Autowired
-    private CharacDao characDao;
+    private CharacDAO characDAO;
 
 
     @Override
-    public List<CharacDto> getAll() throws NotFoundException {
-        List<Charac> characs = characDao.findAll();
-        List<CharacDto> characDTOList = new ArrayList<>();
+    public List<CharacDTO> getAll() {
+        List<Charac> characs= characDAO.findAll();
+        List<CharacDTO> characDTOList = new ArrayList<>();
         for (Charac charac : characs) {
-            characDTOList.add(new CharacDto(charac.getId(), charac.getFirstName(), charac.getLastName(), charac.getSex()));
+            characDTOList.add(new CharacDTO(charac.getId(), charac.getFirstName(), charac.getLastName(), charac.getSex()));
         }
         return characDTOList;
     }
 
     @Override
-    public CharacDto getMotherById(Long id) throws NotFoundException {
-        Charac charac = characDao.findById(id).orElseThrow(NotFoundException::new);
-        return mapToDto(charac.getMother());
-    }
-
-    @Override
-    public CharacDto getFatherById(Long id) throws NotFoundException {
-        Charac charac = characDao.findById(id).orElseThrow(NotFoundException::new);
-        return mapToDto(charac.getFather());
-    }
-
-
-    @Override
-    public CharacDto getCharacById(Long id) throws NotFoundException {
-        Charac charac = characDao.findById(id).orElseThrow(NotFoundException::new);
+    public CharacDTO getCharacById(Long id) throws NotFoundException {
+        Charac charac = characDAO.findById(id).orElseThrow(NotFoundException::new);
         return mapToDto(charac);
     }
 
     @Override
-    public CharacDto createCharac(CharacDto characDto) throws NotFoundException {
+    public CharacDTO createCharac(CharacDTO characDto) {
         Charac charac = mapToEntity(characDto);
-        Charac createdCharac = characDao.save(charac);
+        Charac createdCharac = characDAO.save(charac);
         return mapToDto(createdCharac);
     }
 
     @Override
-    public CharacDto updateCharac(Long id, CharacDto characDto) throws NotFoundException {
-        Charac charac = characDao.findById(id).orElseThrow(NotFoundException::new);
+    public CharacDTO updateCharac(Long id, CharacDTO characDto) throws NotFoundException {
+        Charac charac = characDAO.findById(id).orElseThrow(NotFoundException::new);
         charac.setFirstName(characDto.getFirstName());
         charac.setLastName(characDto.getLastName());
-        Charac updatedCharac = characDao.save(charac);
+        Charac updatedCharac = characDAO.save(charac);
         return mapToDto(updatedCharac);
     }
 
     @Override
     public void deleteCharac(Long id) throws NotFoundException {
-        Charac charac = characDao.findById(id).orElseThrow(NotFoundException::new);
-        characDao.delete(charac);
+        Charac charac = characDAO.findById(id).orElseThrow(NotFoundException::new);
+        characDAO.delete(charac);
     }
 
-    private CharacDto mapToDto(Charac charac) throws NotFoundException {
-        CharacDto characDto = new CharacDto();
+    private CharacDTO mapToDto(Charac charac) {
+        CharacDTO characDto = new CharacDTO();
         characDto.setId(charac.getId());
         characDto.setFirstName(charac.getFirstName());
         characDto.setLastName(charac.getLastName());
         characDto.setSex(charac.getSex());
-
-
-        if (charac.getMother() != null) {
-            CharacDto motherDto = new CharacDto();
-            motherDto.setId(charac.getMother().getId());
-            motherDto.setFirstName(charac.getMother().getFirstName());
-            motherDto.setLastName(charac.getMother().getLastName());
-            motherDto.setSex(charac.getMother().getSex());
-            characDto.setMother(motherDto);
-        }
-
-        if (charac.getFather() != null) {
-            CharacDto fatherDto = new CharacDto();
-            fatherDto.setId(charac.getFather().getId());
-            fatherDto.setFirstName(charac.getFather().getFirstName());
-            fatherDto.setLastName(charac.getFather().getLastName());
-            fatherDto.setSex(charac.getFather().getSex());
-            characDto.setFather(fatherDto);
-        }
-
         return characDto;
     }
 
-
-    private Charac mapToEntity(CharacDto characDto) throws NotFoundException {
+    private Charac mapToEntity(CharacDTO characDto) {
         Charac charac = new Charac();
-        charac.setId(charac.getId());
         charac.setFirstName(characDto.getFirstName());
         charac.setLastName(characDto.getLastName());
-        charac.setSex(characDto.getSex());
-
-        CharacDto motherDto = characDto.getMother();
-        if (motherDto != null) {
-            Charac mother = mapToEntity(motherDto);
-            charac.setMother(mother);
-        }
-        
-        CharacDto fatherDto = characDto.getMother();
-        if (fatherDto != null) {
-            Charac father = mapToEntity(fatherDto);
-            charac.setMother(father);
-        }
-        
+        charac.setSex(charac.getSex());
         return charac;
     }
 }

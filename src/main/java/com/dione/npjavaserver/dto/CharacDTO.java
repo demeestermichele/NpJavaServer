@@ -9,31 +9,20 @@ import java.util.Objects;
 /**
  * A DTO for the {@link Charac} entity
  */
-public class CharacDto implements Serializable {
+public class CharacDTO implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
     private Sex sex;
-    private CharacDto father;
-    private CharacDto mother;
 
-    public CharacDto(Long id, String firstName, String lastName, Sex sex) {
+    public CharacDTO(Long id, String firstName, String lastName, Sex sex) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
     }
 
-    public CharacDto(Long id, String firstName, String lastName, Sex sex, CharacDto father, CharacDto mother) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.sex = sex;
-        this.father = father;
-        this.mother = mother;
-    }
-
-    public CharacDto() {
+    public CharacDTO() {
 
     }
 
@@ -69,27 +58,11 @@ public class CharacDto implements Serializable {
         this.sex = sex;
     }
 
-    public CharacDto getFather() {
-        return father;
-    }
-
-    public void setFather(CharacDto father) {
-        this.father = father;
-    }
-
-    public CharacDto getMother() {
-        return mother;
-    }
-
-    public void setMother(CharacDto mother) {
-        this.mother = mother;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CharacDto entity = (CharacDto) o;
+        CharacDTO entity = (CharacDTO) o;
         return Objects.equals(this.firstName, entity.firstName) &&
                 Objects.equals(this.lastName, entity.lastName) &&
                 Objects.equals(this.sex, entity.sex);
@@ -107,7 +80,4 @@ public class CharacDto implements Serializable {
                 "lastName = " + lastName + ", " +
                 "sex = " + sex + ")";
     }
-
-
-
 }

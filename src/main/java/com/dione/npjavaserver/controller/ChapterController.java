@@ -1,13 +1,17 @@
 package com.dione.npjavaserver.controller;
 
-import com.dione.npjavaserver.model.Chapter;
-import com.dione.npjavaserver.repository.ChapterRepository;
+import com.dione.npjavaserver.dto.ChapterDTO;
+import com.dione.npjavaserver.model.Book;
+import com.dione.npjavaserver.service.ChapterService;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/chapter")
@@ -15,37 +19,53 @@ import java.util.Set;
 public class ChapterController {
 
     @Autowired
-    private ChapterRepository chapterRepository;
+    private ChapterService chapterService;
 
-    @PostMapping("/add")
-    public String addChapter(@RequestParam String name, @RequestParam Integer number, @RequestParam String description) {
-        Chapter chapter = new Chapter();
-        chapter.setName(name);
-        chapter.setNumber(number);
-//        chapter.setDescription(description);
-        chapterRepository.save(chapter);
-        return "Chapter added!";
-    }
-
-    @GetMapping("/all")
+    /**
+     * List of all Characters
+     **/
+    @GetMapping("/")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    public Iterable<Chapter> getChapters() {
-        return chapterRepository.findAll();
+    public ResponseEntity<List<ChapterDTO>> getAll() {
+        List<ChapterDTO> chapterDTOList = chapterService.getAll();
+        return ResponseEntity.ok(chapterDTOList);
     }
-/*
+
+    /**
+     * Get 1 Character using ID
+     **/
     @GetMapping("/{id}")
-    public Chapter findChapterById(@PathVariable Long id) {
-        return chapterRepository.findChapterById(id);
+    public ResponseEntity<ChapterDTO> findChapterById(@PathVariable Long id) {
+        ChapterDTO chapterDTO = null;
+        try {
+            chapterDTO = chapterService.getChapterById(id);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(chapterDTO);
     }
 
-    @GetMapping("/{number}")
-    public Chapter findChapterByNumber(@PathVariable float number) {
-        return chapterRepository.findChaptersByNumber(number);
+
+    /**
+     * Create 1 Character
+     **/
+    @PostMapping("")
+    public ResponseEntity<ChapterDTO> createChapter(@RequestBody ChapterDTO chapterDTO) {
+        ChapterDTO createdChapterDTO = chapterService.createChapter(chapterDTO);
+        return ResponseEntity.created(URI.create("/chapter/" + createdChapterDTO.getName())).body(createdChapterDTO);
+
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/book/{bookIndex}")
+    public ResponseEntity<List<ChapterDTO>> findChaptersByBook(@PathVariable Book bookIndex) throws ChangeSetPersister.NotFoundException {
+        List<ChapterDTO> chapterDTOList = chapterService.getChapterByBook(bookIndex);
+        return ResponseEntity.ok(chapterDTOList);
+
+
+/*    @GetMapping("/{name}")
     public Set<Chapter> findChapterByName(@PathVariable String name){
-        return chapterRepository.findChaptersByNameContaining(name);
+        return chapterService.findChaptersByNameContaining(name);
     }*/
 
+    }
 }
