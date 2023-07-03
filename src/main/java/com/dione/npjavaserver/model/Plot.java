@@ -1,9 +1,13 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.*;
+import net.bytebuddy.implementation.bind.annotation.Default;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -14,10 +18,14 @@ public class Plot implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
-    private float revision;
+
+
+    private Date revision;
+
+    private Book book;
 
 
     /**
@@ -44,18 +52,19 @@ public class Plot implements Serializable {
     public Plot() {
     }
 
-    public Plot(Integer id, String name, String description, float revision) {
+    public Plot(Long id, String name, String description, Date revision, Book book) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.revision = revision;
+        this.book = book;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,11 +84,11 @@ public class Plot implements Serializable {
         this.description = description;
     }
 
-    public float getRevision() {
+    public Date getRevision() {
         return revision;
     }
 
-    public void setRevision(float revision) {
+    public void setRevision(Date revision) {
         this.revision = revision;
     }
 
@@ -97,5 +106,13 @@ public class Plot implements Serializable {
 
     public void setCharacterSet(Set<Charac> characterSet) {
         this.characterSet = characterSet;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }
