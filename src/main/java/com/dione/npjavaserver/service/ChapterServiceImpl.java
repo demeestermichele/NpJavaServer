@@ -2,8 +2,8 @@ package com.dione.npjavaserver.service;
 
 import com.dione.npjavaserver.dao.ChapterDAO;
 import com.dione.npjavaserver.dto.ChapterDTO;
+import com.dione.npjavaserver.model.Book;
 import com.dione.npjavaserver.model.Chapter;
-import com.dione.npjavaserver.model.Charac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -41,6 +41,16 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public List<ChapterDTO> getAll() {
         List<Chapter> chapters = chapterDAO.findAll();
+        List<ChapterDTO> chapterDTOList = new ArrayList<>();
+        for (Chapter chapter : chapters) {
+            chapterDTOList.add(new ChapterDTO(chapter.getName(), chapter.getNumber(), chapter.getVersion(), chapter.getDescription(), chapter.getBook()));
+        }
+        return chapterDTOList;
+    }
+
+    @Override
+    public List<ChapterDTO> getChapterByBook(Book bookIndex) throws ChangeSetPersister.NotFoundException {
+        List<Chapter> chapters = chapterDAO.getChaptersByBook(bookIndex);
         List<ChapterDTO> chapterDTOList = new ArrayList<>();
         for (Chapter chapter : chapters) {
             chapterDTOList.add(new ChapterDTO(chapter.getName(), chapter.getNumber(), chapter.getVersion(), chapter.getDescription(), chapter.getBook()));

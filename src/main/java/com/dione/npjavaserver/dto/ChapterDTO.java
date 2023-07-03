@@ -9,6 +9,7 @@ import java.io.Serializable;
  * A DTO for the {@link Chapter} entity
  */
 public class ChapterDTO implements Serializable {
+    private Long id;
     private String name;
     private Integer number;
     private float version;

@@ -44,7 +44,7 @@ public class CharacController {
     /**
      * Create 1 Character
      **/
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<CharacDTO> createCharac(@RequestBody CharacDTO characDto) {
         CharacDTO createdCharacDto = characService.createCharac(characDto);
         return ResponseEntity.created(URI.create("/charac/" + createdCharacDto.getId())).body(createdCharacDto);
