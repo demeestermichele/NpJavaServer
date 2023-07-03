@@ -9,20 +9,20 @@ import java.util.Objects;
 /**
  * A DTO for the {@link Charac} entity
  */
-public class CharacDto implements Serializable {
+public class CharacDTO implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
     private Sex sex;
 
-    public CharacDto(Long id, String firstName, String lastName, Sex sex) {
+    public CharacDTO(Long id, String firstName, String lastName, Sex sex) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
     }
 
-    public CharacDto() {
+    public CharacDTO() {
 
     }
 
@@ -62,7 +62,7 @@ public class CharacDto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CharacDto entity = (CharacDto) o;
+        CharacDTO entity = (CharacDTO) o;
         return Objects.equals(this.firstName, entity.firstName) &&
                 Objects.equals(this.lastName, entity.lastName) &&
                 Objects.equals(this.sex, entity.sex);
