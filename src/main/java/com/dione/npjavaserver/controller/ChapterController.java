@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/chapter")
+@RequestMapping("/chapters")
 @CrossOrigin(origins = "*")
 public class ChapterController {
 
