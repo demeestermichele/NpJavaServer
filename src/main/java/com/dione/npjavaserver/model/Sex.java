@@ -1,5 +1,5 @@
 package com.dione.npjavaserver.model;
 
 public enum Sex {
-    MALE, FEMALE, OTHER
+    MALE, FEMALE, THERIAN, NONE, OTHER
 }

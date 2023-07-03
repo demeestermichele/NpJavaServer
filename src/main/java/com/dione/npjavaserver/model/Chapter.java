@@ -2,6 +2,8 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,15 +17,19 @@ import java.util.Set;
 public class Chapter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String name;
 
+    @Nullable
     private Integer number;
 
+    @Column(nullable = false, columnDefinition = "integer default 1")
     private float version;
 
     private String description;
+
+    private Book book;
 
 
     /**
@@ -39,12 +45,12 @@ public class Chapter implements Serializable {
     private Set<Charac> characterSet = new LinkedHashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
+    @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JoinTable(name = "chapter_plots",joinColumns = @JoinColumn(name = "chapter_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
-    @JsonManagedReference
     private Set<Plot> plotSet = new LinkedHashSet<>();
 
 
@@ -53,24 +59,25 @@ public class Chapter implements Serializable {
     public Chapter() {
     }
 
-    public Chapter(Integer id) {
+    public Chapter(Long id) {
         this.id = id;
     }
 
-    public Chapter(Integer id, String name, Integer number, float version, String description) {
+    public Chapter(Long id, String name, Integer number, float version, String description, Book book) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.version = version;
         this.description = description;
+        this.book = book;
     }
 
     /**Getters and Setters**/
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -122,6 +129,14 @@ public class Chapter implements Serializable {
         this.plotSet = plotSet;
     }
 
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
     /**To String**/
     @Override
     public String toString() {
@@ -129,8 +144,8 @@ public class Chapter implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", number=" + number +
-                ", version=" + version +
-                ", description='" + description + '\'' +
+/*                ", version=" + version +
+                ", description='" + description + '\'' +*/
                 '}';
     }
 }

@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootApplication
 public class NpJavaServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NpJavaServerApplication.class, args);
-	}
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(NpJavaServerApplication.class, args);
+
+    }
+
 
 
 	@GetMapping("/hello")

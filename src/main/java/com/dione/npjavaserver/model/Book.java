@@ -1,0 +1,5 @@
+package com.dione.npjavaserver.model;
+
+public enum Book {
+    ANTITHEICS_1, ANTITHEICS_2, ANTITHEICS_3, ANTITHEICS_4, CIDER_CITY, JASONS_HYMN, TREES_OF_LIGHT_1, TREES_OF_LIGHT_2, TREES_OF_LIGHT_3
+}

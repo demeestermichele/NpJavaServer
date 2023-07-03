@@ -1,23 +1,22 @@
 package com.dione.npjavaserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Character")
+@Table(name = "CHARACTER")
 public class Charac implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
+
     private String firstName;
     private String lastName;
     private Sex sex;
@@ -25,8 +24,9 @@ public class Charac implements Serializable {
 
 
     /**
-     * One mother (character.Sex == FEMALE) can have multiple children
+     * One mother (character.Sex == FEMALE || or index 1) can have multiple children
      **/
+    //TODO make a difference between biological and effective parent
     @ManyToOne
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -36,8 +36,9 @@ public class Charac implements Serializable {
     private Charac mother;
 
     /**
-     * One father (character.Sex == MALE) can have many children
+     * One father (character.Sex == MALE || or index 0) can have many children
      **/
+    //TODO make a difference between biological and effective parent
     @ManyToOne
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -49,7 +50,7 @@ public class Charac implements Serializable {
 
     /**
      * A character can be in multiple plots, chapters, etc..
-     * When in danger of recursion choose to display ID of Mapping
+     * When in danger of recursion choose to display ID
      **/
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
@@ -58,7 +59,7 @@ public class Charac implements Serializable {
             property = "id")
     @JsonManagedReference
     @JoinTable(name = "characters_chapters", joinColumns = @JoinColumn(name = "charac_id"),
-    inverseJoinColumns = @JoinColumn(name = "chapter_id"))
+            inverseJoinColumns = @JoinColumn(name = "chapter_id"))
     private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
@@ -66,7 +67,7 @@ public class Charac implements Serializable {
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @JsonManagedReference
-    @JoinTable(name = "characters_plots",joinColumns = @JoinColumn(name = "charac_id"),
+    @JoinTable(name = "characters_plots", joinColumns = @JoinColumn(name = "charac_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
     private Set<Plot> plotSet = new LinkedHashSet<>();
 
@@ -76,8 +77,12 @@ public class Charac implements Serializable {
     public Charac() {
     }
 
-    public Charac(Integer id) {
+    public Charac(Long id) {
         this.id = id;
+    }
+
+    public Charac(String firstName) {
+        this.firstName = firstName;
     }
 
     public Charac(String firstName, String lastName, Sex sex, Role role) {
@@ -87,7 +92,7 @@ public class Charac implements Serializable {
         this.role = role;
     }
 
-    public Charac(Integer id, String firstName, String lastName, Sex sex, Role role, Charac mother, Charac father) {
+    public Charac(Long id, String firstName, String lastName, Sex sex, Role role, Charac mother, Charac father) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -100,11 +105,11 @@ public class Charac implements Serializable {
     /**
      * Getters and setters
      **/
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
