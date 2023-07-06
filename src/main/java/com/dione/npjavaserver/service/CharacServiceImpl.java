@@ -18,11 +18,18 @@ public class CharacServiceImpl implements CharacService {
 
 
     @Override
-    public List<CharacDTO> getAll() {
-        List<Charac> characs= characDAO.findAll();
+    public List<CharacDTO> getAll() throws NotFoundException {
+        List<Charac> characs = characDAO.findAll();
         List<CharacDTO> characDTOList = new ArrayList<>();
+
         for (Charac charac : characs) {
-            characDTOList.add(new CharacDTO(charac.getId(), charac.getFirstName(), charac.getLastName(), charac.getSex()));
+
+            CharacDTO motherDTO = new CharacDTO(charac.getMother().getId(), charac.getMother().getFirstName(), charac.getMother().getLastName(), charac.getMother().getSex());
+
+            CharacDTO fatherDTO = new CharacDTO(charac.getFather().getId(), charac.getFather().getFirstName(), charac.getFather().getLastName(), charac.getFather().getSex());
+
+            characDTOList.add(new CharacDTO(charac.getId(), charac.getFirstName(), charac.getLastName(), charac.getSex(), fatherDTO, motherDTO));
+
         }
         return characDTOList;
     }
@@ -61,6 +68,26 @@ public class CharacServiceImpl implements CharacService {
         characDto.setFirstName(charac.getFirstName());
         characDto.setLastName(charac.getLastName());
         characDto.setSex(charac.getSex());
+
+        Charac mother = charac.getMother();
+        if (mother != null) {
+            CharacDTO motherDto = new CharacDTO();
+            motherDto.setId(mother.getId());
+            motherDto.setFirstName(mother.getFirstName());
+            motherDto.setLastName(mother.getLastName());
+            motherDto.setSex(mother.getSex());
+            characDto.setMother(motherDto);
+        }
+
+        Charac father = charac.getFather();
+        if (father != null) {
+            CharacDTO fatherDto = new CharacDTO();
+            fatherDto.setId(father.getId());
+            fatherDto.setFirstName(father.getFirstName());
+            fatherDto.setLastName(father.getLastName());
+            fatherDto.setSex(father.getSex());
+            characDto.setFather(fatherDto);
+        }
         return characDto;
     }
 
@@ -69,6 +96,26 @@ public class CharacServiceImpl implements CharacService {
         charac.setFirstName(characDto.getFirstName());
         charac.setLastName(characDto.getLastName());
         charac.setSex(charac.getSex());
+
+        CharacDTO motherDto = characDto.getMother();
+        if (motherDto != null) {
+            Charac mother = new Charac();
+            motherDto.setId(mother.getId());
+            motherDto.setFirstName(mother.getFirstName());
+            motherDto.setLastName(mother.getLastName());
+            motherDto.setSex(mother.getSex());
+            charac.setMother(mother);
+        }
+
+        CharacDTO fatherDto = characDto.getFather();
+        if (fatherDto != null) {
+            Charac father = new Charac();
+            father.setId(fatherDto.getId());
+            father.setFirstName(fatherDto.getFirstName());
+            father.setLastName(fatherDto.getLastName());
+            father.setSex(fatherDto.getSex());
+            charac.setFather(father);
+        }
         return charac;
     }
 }

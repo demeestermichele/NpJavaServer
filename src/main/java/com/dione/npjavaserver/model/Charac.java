@@ -102,6 +102,7 @@ public class Charac implements Serializable {
         this.father = father;
     }
 
+
     /**
      * Getters and setters
      **/

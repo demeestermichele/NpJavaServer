@@ -6,7 +6,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import java.util.List;
 
 public interface CharacService {
-    List<CharacDTO> getAll();
+    List<CharacDTO> getAll() throws ChangeSetPersister.NotFoundException;
 
     CharacDTO getCharacById(Long id) throws ChangeSetPersister.NotFoundException;
 

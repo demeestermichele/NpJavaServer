@@ -14,6 +14,8 @@ public class CharacDTO implements Serializable {
     private String firstName;
     private String lastName;
     private Sex sex;
+    private CharacDTO father;
+    private CharacDTO mother;
 
     public CharacDTO(Long id, String firstName, String lastName, Sex sex) {
         this.id = id;
@@ -22,8 +24,21 @@ public class CharacDTO implements Serializable {
         this.sex = sex;
     }
 
+    public CharacDTO(Long id, String firstName, String lastName, Sex sex, CharacDTO father, CharacDTO mother) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.father = father;
+        this.mother = mother;
+    }
+
     public CharacDTO() {
 
+    }
+
+
+    public CharacDTO(Long id, String firstName, String lastName) {
     }
 
     public Long getId() {
@@ -56,6 +71,22 @@ public class CharacDTO implements Serializable {
 
     public void setSex(Sex sex) {
         this.sex = sex;
+    }
+
+    public CharacDTO getFather() {
+        return father;
+    }
+
+    public void setFather(CharacDTO father) {
+        this.father = father;
+    }
+
+    public CharacDTO getMother() {
+        return mother;
+    }
+
+    public void setMother(CharacDTO mother) {
+        this.mother = mother;
     }
 
     @Override
