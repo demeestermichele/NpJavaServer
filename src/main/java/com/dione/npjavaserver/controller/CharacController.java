@@ -1,6 +1,7 @@
 package com.dione.npjavaserver.controller;
 
 import com.dione.npjavaserver.dto.CharacDTO;
+import com.dione.npjavaserver.model.Charac;
 import com.dione.npjavaserver.service.CharacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -77,9 +79,20 @@ public class CharacController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO
+    /**
+     * finds the mother and the father of one character using character ID
+     * @param id character ID
+     * @return motherDTO and fatherDTO
+     * @throws ChangeSetPersister.NotFoundException
+     */
     @GetMapping("/{id}/parents")
-    public ResponseEntity<List<CharacDTO>> getParents(@PathVariable Long id){
-        return null;
+    public ResponseEntity<List<CharacDTO>> getParents(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+        CharacDTO charac = characService.getCharacById(id);
+        List<CharacDTO> parents = new ArrayList<>();
+        CharacDTO mGrandM = characService.getCharacById(charac.getMother().getId());
+        CharacDTO mGrandP = characService.getCharacById(charac.getFather().getId());
+        parents.add(mGrandM);
+        parents.add(mGrandP);
+        return ResponseEntity.ok(parents);
     }
 }
