@@ -10,6 +10,9 @@ public interface ChapterService {
 
     List<ChapterDTO> getAll();
 
+    //TODO
+    List<ChapterDTO> getChaptersByCharacterId(Long id);
+
     ChapterDTO getChapterById(Long id) throws ChangeSetPersister.NotFoundException;
     List<ChapterDTO> getChapterByBook(Book bookIndex) throws ChangeSetPersister.NotFoundException;
 

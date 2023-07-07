@@ -1,10 +1,12 @@
 package com.dione.npjavaserver.repository;
 
+import com.dione.npjavaserver.dto.ChapterDTO;
 import com.dione.npjavaserver.model.Book;
 import com.dione.npjavaserver.model.Chapter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.Set;
 
 public interface ChapterRepository extends JpaRepository<Chapter, Integer> {
@@ -17,4 +19,5 @@ public interface ChapterRepository extends JpaRepository<Chapter, Integer> {
     public Chapter findChaptersByNumber(float number);
 
 
+    List<ChapterDTO> findByCharacId(Long id);
 }

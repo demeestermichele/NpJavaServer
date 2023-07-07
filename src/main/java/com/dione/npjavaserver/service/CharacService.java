@@ -15,4 +15,7 @@ public interface CharacService {
     CharacDTO updateCharac(Long id, CharacDTO characDto) throws ChangeSetPersister.NotFoundException;
 
     void deleteCharac(Long id) throws ChangeSetPersister.NotFoundException;
+
+
 }
+
