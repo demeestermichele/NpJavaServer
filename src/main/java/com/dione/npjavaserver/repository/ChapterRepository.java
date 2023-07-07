@@ -18,6 +18,4 @@ public interface ChapterRepository extends JpaRepository<Chapter, Integer> {
 
     public Chapter findChaptersByNumber(float number);
 
-
-    List<ChapterDTO> findByCharacId(Long id);
 }

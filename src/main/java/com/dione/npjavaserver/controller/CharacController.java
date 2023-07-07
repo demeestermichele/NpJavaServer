@@ -2,11 +2,13 @@ package com.dione.npjavaserver.controller;
 
 import com.dione.npjavaserver.dto.ChapterDTO;
 import com.dione.npjavaserver.dto.CharacDTO;
+import com.dione.npjavaserver.dto.CharacterChapterDTO;
 import com.dione.npjavaserver.model.Chapter;
 import com.dione.npjavaserver.model.Charac;
 import com.dione.npjavaserver.service.ChapterService;
 import com.dione.npjavaserver.service.CharacService;
 import com.dione.npjavaserver.service.CharacServiceImpl;
+import com.dione.npjavaserver.service.CharacterChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -28,9 +30,8 @@ public class CharacController {
     private CharacService characService;
 
     @Autowired
-    private ChapterService chapterService;
+    private CharacterChapterService ccService;
 
-    private CharacServiceImpl characterServiceImpl;
 
     /**
      * List of all Characters
@@ -116,9 +117,10 @@ public class CharacController {
      * @return list of chapters
      */
     @GetMapping("/{id}/chapters")
-    public ResponseEntity<List<ChapterDTO>> getChaptersByCharacId(@PathVariable Long id) {
+    public ResponseEntity<List<CharacterChapterDTO>> getChaptersByCharacterId(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+
         try {
-            List<ChapterDTO> chapters = chapterService.getChaptersByCharacterId(id);
+            List<CharacterChapterDTO> chapters = ccService.getCharacterChapterByChapterId(id);
             return ResponseEntity.ok(chapters);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

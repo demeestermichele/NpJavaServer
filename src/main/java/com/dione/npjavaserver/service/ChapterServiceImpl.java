@@ -56,13 +56,13 @@ public class ChapterServiceImpl implements ChapterService {
         return chapterDTOList;
     }
 
-    @Override
+   /* @Override
     public List<ChapterDTO> getChaptersByCharacterId(Long id) {
         List<ChapterDTO> chapters = chapterRepository.findByCharacId(id);
         return chapters.stream()
                 .map(chapter -> new ChapterDTO(chapter.getName(), chapter.getDescription(), chapter.getBook()))
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @Override
     public List<ChapterDTO> getChapterByBook(Book bookIndex) throws ChangeSetPersister.NotFoundException {

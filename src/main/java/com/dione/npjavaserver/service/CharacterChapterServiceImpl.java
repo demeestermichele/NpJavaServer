@@ -5,10 +5,13 @@ import com.dione.npjavaserver.dao.CharacDAO;
 import com.dione.npjavaserver.dto.CharacterChapterDTO;
 import com.dione.npjavaserver.model.Chapter;
 import com.dione.npjavaserver.model.Charac;
+import com.dione.npjavaserver.repository.CharacterChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CharacterChapterServiceImpl implements CharacterChapterService {
@@ -19,9 +22,30 @@ public class CharacterChapterServiceImpl implements CharacterChapterService {
     @Autowired
     private ChapterDAO chapterDAO;
 
+    @Autowired
+    private CharacterChapterRepository chapterRepository;
+
+    public CharacterChapterServiceImpl(CharacDAO charac, ChapterDAO chapter) {
+        this.characDAO = charac;
+        this.chapterDAO = chapter;
+    }
+
     @Override
     public List<CharacterChapterDTO> getAll() {
-        return null;
+        List<Charac> characs = characDAO.findAll();
+        List<Chapter> chapters = chapterDAO.findAll();
+        List<CharacterChapterDTO> dtoList = new ArrayList<>();
+        for (int i = 0; i < characs.size(); i++) {
+            Charac charac = characs.get(i);
+            Chapter chapter = chapters.get(i);
+
+            CharacterChapterDTO characterChapterDTO = new CharacterChapterDTO();
+            characterChapterDTO.setChapterId(chapter.getId());
+            characterChapterDTO.setCharacterId(charac.getId());
+            dtoList.add(characterChapterDTO);
+        }
+
+        return dtoList;
     }
 
     @Override
@@ -31,15 +55,24 @@ public class CharacterChapterServiceImpl implements CharacterChapterService {
 
     @Override
     public List<CharacterChapterDTO> getCharacterChapterByChapterId(Long id) {
-        return null;
+        Charac characs = characDAO.getReferenceById(id);
+        Set<Chapter> chapterList = characs.getChapterSet();
+        List<CharacterChapterDTO> dto = new ArrayList<>();
+        for (Chapter chap : chapterList) {
+            CharacterChapterDTO chapterDTO = new CharacterChapterDTO();
+            chapterDTO.setCharacterId(id);
+            chapterDTO.setChapterId(chap.getId());
+            chapterDTO.setChapterName(chap.getName());
+            dto.add(chapterDTO);
+
+        }
+        return dto;
     }
 
-    private CharacterChapterDTO mapToDto(Charac charac, Chapter chapter) {
+    private CharacterChapterDTO mapToDto(Charac charac) {
         CharacterChapterDTO dto = new CharacterChapterDTO();
         dto.setCharacterId(charac.getId());
         dto.setCharacterName(charac.getFirstName());
-        dto.setChapterId(chapter.getId());
-        dto.setChapterName(chapter.getName());
         return dto;
     }
 
