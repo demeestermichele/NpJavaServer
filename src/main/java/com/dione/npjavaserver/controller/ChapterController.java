@@ -1,11 +1,10 @@
 package com.dione.npjavaserver.controller;
 
 import com.dione.npjavaserver.dto.ChapterDTO;
-import com.dione.npjavaserver.dto.CharacterChapterDTO;
+import com.dione.npjavaserver.dto.CharacterChapterPlotDTO;
 import com.dione.npjavaserver.model.Book;
-import com.dione.npjavaserver.model.Chapter;
 import com.dione.npjavaserver.service.ChapterService;
-import com.dione.npjavaserver.service.CharacterChapterService;
+import com.dione.npjavaserver.service.CharacterChapterPlotService;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/chapters")
@@ -27,7 +25,7 @@ public class ChapterController {
     private ChapterService chapterService;
 
     @Autowired
-    private CharacterChapterService ccService;
+    private CharacterChapterPlotService ccService;
 
 
     /**
@@ -72,9 +70,9 @@ public class ChapterController {
     }
 
     @GetMapping("/{id}/characters")
-        public ResponseEntity<List<CharacterChapterDTO>> getCharactersByChapterId(@PathVariable Long id){
+        public ResponseEntity<List<CharacterChapterPlotDTO>> getCharactersByChapterId(@PathVariable Long id){
             try {
-                List<CharacterChapterDTO> characters = ccService.getCharacterChapterByChapterId(id);
+                List<CharacterChapterPlotDTO> characters = ccService.getCharactersByChapterId(id);
                 return ResponseEntity.ok(characters);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

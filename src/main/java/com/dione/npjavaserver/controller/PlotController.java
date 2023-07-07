@@ -1,9 +1,12 @@
 package com.dione.npjavaserver.controller;
 
+import com.dione.npjavaserver.dto.CharacterChapterPlotDTO;
 import com.dione.npjavaserver.dto.PlotDTO;
+import com.dione.npjavaserver.service.CharacterChapterPlotService;
 import com.dione.npjavaserver.service.PlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,9 @@ public class PlotController {
 
     @Autowired
     private PlotService plotService;
+
+    @Autowired
+    private CharacterChapterPlotService ccService;
 
     /**
      * List of all Plots
@@ -75,5 +81,24 @@ public class PlotController {
             throw new RuntimeException(e);
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/characters")
+    public ResponseEntity<List<CharacterChapterPlotDTO>> getCharactersByPlotId(@PathVariable Long id){
+        try {
+            List<CharacterChapterPlotDTO> plots = ccService.getCharactersByPlotId(id);
+            return ResponseEntity.ok(plots);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @GetMapping("/{id}/chapters")
+    public ResponseEntity<List<CharacterChapterPlotDTO>> getChaptersByPlotId(@PathVariable Long id){
+        try {
+            List<CharacterChapterPlotDTO> plots = ccService.getChaptersByPlotId(id);
+            return ResponseEntity.ok(plots);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

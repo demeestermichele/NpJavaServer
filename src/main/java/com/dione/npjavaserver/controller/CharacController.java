@@ -1,14 +1,9 @@
 package com.dione.npjavaserver.controller;
 
-import com.dione.npjavaserver.dto.ChapterDTO;
 import com.dione.npjavaserver.dto.CharacDTO;
-import com.dione.npjavaserver.dto.CharacterChapterDTO;
-import com.dione.npjavaserver.model.Chapter;
-import com.dione.npjavaserver.model.Charac;
-import com.dione.npjavaserver.service.ChapterService;
+import com.dione.npjavaserver.dto.CharacterChapterPlotDTO;
 import com.dione.npjavaserver.service.CharacService;
-import com.dione.npjavaserver.service.CharacServiceImpl;
-import com.dione.npjavaserver.service.CharacterChapterService;
+import com.dione.npjavaserver.service.CharacterChapterPlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -17,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/characters")
@@ -30,7 +23,7 @@ public class CharacController {
     private CharacService characService;
 
     @Autowired
-    private CharacterChapterService ccService;
+    private CharacterChapterPlotService ccService;
 
 
     /**
@@ -117,10 +110,10 @@ public class CharacController {
      * @return list of chapters
      */
     @GetMapping("/{id}/chapters")
-    public ResponseEntity<List<CharacterChapterDTO>> getChaptersByCharacterId(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<List<CharacterChapterPlotDTO>> getChaptersByCharacterId(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
 
         try {
-            List<CharacterChapterDTO> chapters = ccService.getCharacterChapterByCharacterId(id);
+            List<CharacterChapterPlotDTO> chapters = ccService.getChaptersByCharacterId(id);
             return ResponseEntity.ok(chapters);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
