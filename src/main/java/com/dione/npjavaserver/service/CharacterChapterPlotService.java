@@ -10,5 +10,8 @@ public interface CharacterChapterPlotService {
     List<CharacterChapterPlotDTO> getChaptersByPlotId(Long id);
     List<CharacterChapterPlotDTO> getCharactersByChapterId(Long id);
     List<CharacterChapterPlotDTO> getCharactersByPlotId(Long id);
+    List<CharacterChapterPlotDTO> getPlotsByCharacterId(Long id);
+    List<CharacterChapterPlotDTO> getPlotsByChapterId(Long id);
+
 }
 

@@ -78,5 +78,13 @@ public class ChapterController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
-
+    @GetMapping("/{id}/plots")
+    public ResponseEntity<List<CharacterChapterPlotDTO>> getPlotsByChapterId(@PathVariable Long id){
+        try {
+            List<CharacterChapterPlotDTO> characters = ccService.getPlotsByChapterId(id);
+            return ResponseEntity.ok(characters);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

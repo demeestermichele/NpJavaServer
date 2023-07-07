@@ -99,6 +99,24 @@ public class CharacterChapterPlotServiceImpl implements CharacterChapterPlotServ
         }
         return dto;
     }
+
+    @Override
+    public List<CharacterChapterPlotDTO> getPlotsByCharacterId(Long id) {
+        Charac characs = characDAO.getReferenceById(id);
+        Set<Plot> plots = characs.getPlotSet();
+        List<CharacterChapterPlotDTO> dto = new ArrayList<>();
+        for (Plot plot : plots) {
+            CharacterChapterPlotDTO plotDTO = new CharacterChapterPlotDTO();
+            plotDTO.setCharacterId(id);
+            plotDTO.setChapterId(plot.getId());
+            plotDTO.setChapterName(plot.getName());
+            plotDTO.setCharacterName(characs.getFirstName() + " " + characs.getLastName());
+            dto.add(plotDTO);
+
+        }
+        return dto;
+    }
+
     @Override
     public List<CharacterChapterPlotDTO> getChaptersByPlotId(Long id) {
         Plot plot = plotDAO.getReferenceById(id);
@@ -115,6 +133,21 @@ public class CharacterChapterPlotServiceImpl implements CharacterChapterPlotServ
         return dto;
     }
 
+    @Override
+    public List<CharacterChapterPlotDTO> getPlotsByChapterId(Long id) {
+        Chapter chapter = chapterDAO.getReferenceById(id);
+        Set<Plot> plotList = chapter.getPlotSet();
+        List<CharacterChapterPlotDTO> dto = new ArrayList<>();
+        for (Plot plot : plotList) {
+            CharacterChapterPlotDTO chapterDTO = new CharacterChapterPlotDTO();
+            chapterDTO.setChapterId(id);
+            chapterDTO.setChapterName(chapter.getName());
+            chapterDTO.setPlotId(plot.getId());
+            chapterDTO.setPlotName(plot.getName());
+            dto.add(chapterDTO);
+        }
+        return dto;
+    }
 
     private CharacterChapterPlotDTO mapToCharacDto(Charac charac) {
         CharacterChapterPlotDTO dto = new CharacterChapterPlotDTO();
