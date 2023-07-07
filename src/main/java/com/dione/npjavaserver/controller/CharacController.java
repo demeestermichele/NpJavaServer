@@ -120,7 +120,7 @@ public class CharacController {
     public ResponseEntity<List<CharacterChapterDTO>> getChaptersByCharacterId(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
 
         try {
-            List<CharacterChapterDTO> chapters = ccService.getCharacterChapterByChapterId(id);
+            List<CharacterChapterDTO> chapters = ccService.getCharacterChapterByCharacterId(id);
             return ResponseEntity.ok(chapters);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

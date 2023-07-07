@@ -50,11 +50,6 @@ public class CharacterChapterServiceImpl implements CharacterChapterService {
 
     @Override
     public List<CharacterChapterDTO> getCharacterChapterByCharacterId(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<CharacterChapterDTO> getCharacterChapterByChapterId(Long id) {
         Charac characs = characDAO.getReferenceById(id);
         Set<Chapter> chapterList = characs.getChapterSet();
         List<CharacterChapterDTO> dto = new ArrayList<>();
@@ -63,6 +58,24 @@ public class CharacterChapterServiceImpl implements CharacterChapterService {
             chapterDTO.setCharacterId(id);
             chapterDTO.setChapterId(chap.getId());
             chapterDTO.setChapterName(chap.getName());
+            chapterDTO.setCharacterName(characs.getFirstName() + " " + characs.getLastName());
+            dto.add(chapterDTO);
+
+        }
+        return dto;
+    }
+
+    @Override
+    public List<CharacterChapterDTO> getCharacterChapterByChapterId(Long id) {
+        Chapter chapter = chapterDAO.getReferenceById(id);
+        Set<Charac> characList = chapter.getCharacterSet();
+        List<CharacterChapterDTO> dto = new ArrayList<>();
+        for (Charac charac : characList) {
+            CharacterChapterDTO chapterDTO = new CharacterChapterDTO();
+            chapterDTO.setChapterId(id);
+            chapterDTO.setCharacterId(charac.getId());
+            chapterDTO.setCharacterName(charac.getFirstName() + " " + charac.getLastName());
+            chapterDTO.setChapterName(chapter.getName());
             dto.add(chapterDTO);
 
         }

@@ -1,17 +1,22 @@
 package com.dione.npjavaserver.controller;
 
 import com.dione.npjavaserver.dto.ChapterDTO;
+import com.dione.npjavaserver.dto.CharacterChapterDTO;
 import com.dione.npjavaserver.model.Book;
+import com.dione.npjavaserver.model.Chapter;
 import com.dione.npjavaserver.service.ChapterService;
+import com.dione.npjavaserver.service.CharacterChapterService;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/chapters")
@@ -20,6 +25,10 @@ public class ChapterController {
 
     @Autowired
     private ChapterService chapterService;
+
+    @Autowired
+    private CharacterChapterService ccService;
+
 
     /**
      * List of all Characters
@@ -60,12 +69,16 @@ public class ChapterController {
     public ResponseEntity<List<ChapterDTO>> findChaptersByBook(@PathVariable Book bookIndex) throws ChangeSetPersister.NotFoundException {
         List<ChapterDTO> chapterDTOList = chapterService.getChapterByBook(bookIndex);
         return ResponseEntity.ok(chapterDTOList);
-
-
-/*    @GetMapping("/{name}")
-    public Set<Chapter> findChapterByName(@PathVariable String name){
-        return chapterService.findChaptersByNameContaining(name);
-    }*/
-
     }
+
+    @GetMapping("/{id}/characters")
+        public ResponseEntity<List<CharacterChapterDTO>> getCharactersByChapterId(@PathVariable Long id){
+            try {
+                List<CharacterChapterDTO> characters = ccService.getCharacterChapterByChapterId(id);
+                return ResponseEntity.ok(characters);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+
 }
