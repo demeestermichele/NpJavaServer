@@ -22,6 +22,13 @@ public class EventDTO implements Serializable {
     public EventDTO() {
     }
 
+    public EventDTO(String name, EventType type, String location, String description) {
+        this.name = name;
+        this.type = type;
+        this.location = location;
+        this.description = description;
+    }
+
     public EventDTO(Long id, String name, EventType type, String location, String description, Long year, Long month, Long day) {
         this.id = id;
         this.name = name;
@@ -37,32 +44,64 @@ public class EventDTO implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public EventType getType() {
         return type;
     }
 
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
     public String getLocation() {
         return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Long getYear() {
         return year;
+    }
+
+    public void setYear(Long year) {
+        this.year = year;
     }
 
     public Long getMonth() {
         return month;
     }
 
+    public void setMonth(Long month) {
+        this.month = month;
+    }
+
     public Long getDay() {
         return day;
+    }
+
+    public void setDay(Long day) {
+        this.day = day;
     }
 
     @Override

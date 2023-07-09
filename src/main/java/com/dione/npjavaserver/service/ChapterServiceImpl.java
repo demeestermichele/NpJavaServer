@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ChapterServiceImpl implements ChapterService {
@@ -19,7 +18,7 @@ public class ChapterServiceImpl implements ChapterService {
     @Autowired
     private ChapterDAO chapterDAO;
 
-    private final ChapterRepository chapterRepository;
+    private ChapterRepository chapterRepository;
 
     public ChapterServiceImpl(ChapterRepository chapterRepository) {
         this.chapterRepository = chapterRepository;
@@ -55,14 +54,6 @@ public class ChapterServiceImpl implements ChapterService {
         }
         return chapterDTOList;
     }
-
-   /* @Override
-    public List<ChapterDTO> getChaptersByCharacterId(Long id) {
-        List<ChapterDTO> chapters = chapterRepository.findByCharacId(id);
-        return chapters.stream()
-                .map(chapter -> new ChapterDTO(chapter.getName(), chapter.getDescription(), chapter.getBook()))
-                .collect(Collectors.toList());
-    }*/
 
     @Override
     public List<ChapterDTO> getChapterByBook(Book bookIndex) throws ChangeSetPersister.NotFoundException {
