@@ -52,7 +52,6 @@ public class Charac implements Serializable {
      * A character can be in multiple plots, chapters, etc..
      * When in danger of recursion choose to display ID
      **/
-
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -62,6 +61,10 @@ public class Charac implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "chapter_id"))
     private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
+    /**
+     * A character can be in multiple plots, chapters, etc..
+     * When in danger of recursion choose to display ID
+     **/
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -70,6 +73,19 @@ public class Charac implements Serializable {
     @JoinTable(name = "characters_plots", joinColumns = @JoinColumn(name = "charac_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
     private Set<Plot> plotSet = new LinkedHashSet<>();
+
+    /**
+     * A character can be in multiple plots, chapters, etc..
+     * When in danger of recursion choose to display ID
+     **/
+    @ManyToMany(cascade = CascadeType.ALL) //this model maps the events
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonManagedReference
+    @JoinTable(name = "characters_events", joinColumns = @JoinColumn(name = "charac_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private Set<Event> eventSet = new LinkedHashSet<>();
 
     /**
      * Constructors

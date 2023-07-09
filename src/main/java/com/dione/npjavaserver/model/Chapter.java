@@ -53,6 +53,14 @@ public class Chapter implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
     private Set<Plot> plotSet = new LinkedHashSet<>();
 
+    @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JoinTable(name = "chapter_events",joinColumns = @JoinColumn(name = "chapter_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private Set<Event> eventSet = new LinkedHashSet<>();
 
 
     /**Constructors**/

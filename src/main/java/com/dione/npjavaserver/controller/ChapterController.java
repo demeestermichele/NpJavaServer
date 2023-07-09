@@ -1,10 +1,10 @@
 package com.dione.npjavaserver.controller;
 
 import com.dione.npjavaserver.dto.ChapterDTO;
-import com.dione.npjavaserver.dto.CharacterChapterPlotDTO;
+import com.dione.npjavaserver.dto.SearchDTO;
 import com.dione.npjavaserver.model.Book;
 import com.dione.npjavaserver.service.ChapterService;
-import com.dione.npjavaserver.service.CharacterChapterPlotService;
+import com.dione.npjavaserver.service.SearchService;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class ChapterController {
     private ChapterService chapterService;
 
     @Autowired
-    private CharacterChapterPlotService ccService;
+    private SearchService ccService;
 
 
     /**
@@ -70,18 +70,18 @@ public class ChapterController {
     }
 
     @GetMapping("/{id}/characters")
-        public ResponseEntity<List<CharacterChapterPlotDTO>> getCharactersByChapterId(@PathVariable Long id){
+        public ResponseEntity<List<SearchDTO>> getCharactersByChapterId(@PathVariable Long id){
             try {
-                List<CharacterChapterPlotDTO> characters = ccService.getCharactersByChapterId(id);
+                List<SearchDTO> characters = ccService.getCharactersByChapterId(id);
                 return ResponseEntity.ok(characters);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
     @GetMapping("/{id}/plots")
-    public ResponseEntity<List<CharacterChapterPlotDTO>> getPlotsByChapterId(@PathVariable Long id){
+    public ResponseEntity<List<SearchDTO>> getPlotsByChapterId(@PathVariable Long id){
         try {
-            List<CharacterChapterPlotDTO> characters = ccService.getPlotsByChapterId(id);
+            List<SearchDTO> characters = ccService.getPlotsByChapterId(id);
             return ResponseEntity.ok(characters);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

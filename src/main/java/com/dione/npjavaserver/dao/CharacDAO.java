@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CharacDAO extends JpaRepository<Charac, Long> {
-    List<Charac> findAllByChapterSet_Id(Long chapterId);
+
 }

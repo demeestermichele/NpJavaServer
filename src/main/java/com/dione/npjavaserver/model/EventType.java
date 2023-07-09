@@ -1,0 +1,5 @@
+package com.dione.npjavaserver.model;
+
+public enum EventType {
+    BIRTH, DEATH, REBIRTH, PERSONAL, POLITICAL, NATURAL, CONSPIRACY, DISASTER, CULTURAL, SPIRITUAL,  MEETING, PREDICTION, IMPENDING
+}

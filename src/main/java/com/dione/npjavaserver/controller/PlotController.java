@@ -1,8 +1,8 @@
 package com.dione.npjavaserver.controller;
 
-import com.dione.npjavaserver.dto.CharacterChapterPlotDTO;
+import com.dione.npjavaserver.dto.SearchDTO;
 import com.dione.npjavaserver.dto.PlotDTO;
-import com.dione.npjavaserver.service.CharacterChapterPlotService;
+import com.dione.npjavaserver.service.SearchService;
 import com.dione.npjavaserver.service.PlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -22,7 +22,7 @@ public class PlotController {
     private PlotService plotService;
 
     @Autowired
-    private CharacterChapterPlotService ccService;
+    private SearchService ccService;
 
     /**
      * List of all Plots
@@ -84,18 +84,18 @@ public class PlotController {
     }
 
     @GetMapping("/{id}/characters")
-    public ResponseEntity<List<CharacterChapterPlotDTO>> getCharactersByPlotId(@PathVariable Long id){
+    public ResponseEntity<List<SearchDTO>> getCharactersByPlotId(@PathVariable Long id){
         try {
-            List<CharacterChapterPlotDTO> plots = ccService.getCharactersByPlotId(id);
+            List<SearchDTO> plots = ccService.getCharactersByPlotId(id);
             return ResponseEntity.ok(plots);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
     @GetMapping("/{id}/chapters")
-    public ResponseEntity<List<CharacterChapterPlotDTO>> getChaptersByPlotId(@PathVariable Long id){
+    public ResponseEntity<List<SearchDTO>> getChaptersByPlotId(@PathVariable Long id){
         try {
-            List<CharacterChapterPlotDTO> plots = ccService.getChaptersByPlotId(id);
+            List<SearchDTO> plots = ccService.getChaptersByPlotId(id);
             return ResponseEntity.ok(plots);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

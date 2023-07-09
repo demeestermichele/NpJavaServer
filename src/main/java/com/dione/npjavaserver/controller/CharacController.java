@@ -1,9 +1,9 @@
 package com.dione.npjavaserver.controller;
 
 import com.dione.npjavaserver.dto.CharacDTO;
-import com.dione.npjavaserver.dto.CharacterChapterPlotDTO;
+import com.dione.npjavaserver.dto.SearchDTO;
 import com.dione.npjavaserver.service.CharacService;
-import com.dione.npjavaserver.service.CharacterChapterPlotService;
+import com.dione.npjavaserver.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class CharacController {
     private CharacService characService;
 
     @Autowired
-    private CharacterChapterPlotService ccService;
+    private SearchService ccService;
 
 
     /**
@@ -110,19 +110,19 @@ public class CharacController {
      * @return list of chapters
      */
     @GetMapping("/{id}/chapters")
-    public ResponseEntity<List<CharacterChapterPlotDTO>> getChaptersByCharacterId(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<List<SearchDTO>> getChaptersByCharacterId(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
 
         try {
-            List<CharacterChapterPlotDTO> chapters = ccService.getChaptersByCharacterId(id);
+            List<SearchDTO> chapters = ccService.getChaptersByCharacterId(id);
             return ResponseEntity.ok(chapters);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
     @GetMapping("/{id}/plots")
-    public ResponseEntity<List<CharacterChapterPlotDTO>> getPlotsByCharacterId(@PathVariable Long id){
+    public ResponseEntity<List<SearchDTO>> getPlotsByCharacterId(@PathVariable Long id){
         try {
-            List<CharacterChapterPlotDTO> characters = ccService.getPlotsByCharacterId(id);
+            List<SearchDTO> characters = ccService.getPlotsByCharacterId(id);
             return ResponseEntity.ok(characters);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

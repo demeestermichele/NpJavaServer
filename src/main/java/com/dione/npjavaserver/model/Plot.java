@@ -48,6 +48,19 @@ public class Plot implements Serializable {
     @JsonBackReference
     private Set<Charac> characterSet = new LinkedHashSet<>();
 
+    /**
+     * A chapter can have multiple plots, characters, etc..
+     * When in danger of recursion choose to display ID of Mapping
+     **/
+    @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JoinTable(name = "plots_events",joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "plot_id"))
+    private Set<Event> eventSet = new LinkedHashSet<>();
+
 
     public Plot() {
     }
