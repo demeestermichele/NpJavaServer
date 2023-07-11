@@ -1,3 +1,4 @@
+/*
 package com.dione.npjavaserver.calendar.repository;
 
 import com.dione.npjavaserver.calendar.model.CalendarCalculation;
@@ -10,3 +11,4 @@ public interface CalendarCalculationRepository extends CrudRepository<CalendarCa
 
 
 }
+*/

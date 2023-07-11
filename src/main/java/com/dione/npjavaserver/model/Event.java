@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "EVENT")
+@Table(name = "Events")
 public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,12 +20,14 @@ public class Event implements Serializable {
     private EventType type;
     private String location;
     private String description;
-    private Long year;
-    private Long month;
-    private Long day;
+
+    private Double short_form;
+    private Long years;
+    private Long months;
+    private Long days;
 
     /**
-     * A Charac can have multiple plots, chapters, etc..
+     * A Character can have multiple plots, chapters, etc..
      * When in danger of recursion choose to display ID of Mapping
      **/
     @ManyToMany(mappedBy = "eventSet", cascade = CascadeType.ALL)
@@ -101,28 +103,28 @@ public class Event implements Serializable {
         this.description = description;
     }
 
-    public Long getYear() {
-        return year;
+    public Long getYears() {
+        return years;
     }
 
-    public void setYear(Long year) {
-        this.year = year;
+    public void setYears(Long year) {
+        this.years = year;
     }
 
-    public Long getMonth() {
-        return month;
+    public Long getMonths() {
+        return months;
     }
 
-    public void setMonth(Long month) {
-        this.month = month;
+    public void setMonths(Long month) {
+        this.months = month;
     }
 
-    public Long getDay() {
-        return day;
+    public Long getDays() {
+        return days;
     }
 
-    public void setDay(Long day) {
-        this.day = day;
+    public void setDays(Long day) {
+        this.days = day;
     }
 
     public Set<Charac> getCharacterSet() {
@@ -149,6 +151,14 @@ public class Event implements Serializable {
         this.plotSet = plotSet;
     }
 
+    public Double getShort_form() {
+        return short_form;
+    }
+
+    public void setShort_form(Double short_form) {
+        this.short_form = short_form;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -157,9 +167,9 @@ public class Event implements Serializable {
                 ", type=" + type +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
-                ", year=" + year +
-                ", month=" + month +
-                ", day=" + day +
+                ", year=" + years +
+                ", month=" + months +
+                ", day=" + days +
                 ", characterSet=" + characterSet +
                 ", chapterSet=" + chapterSet +
                 ", plotSet=" + plotSet +

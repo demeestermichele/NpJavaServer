@@ -2,10 +2,12 @@ package com.dione.npjavaserver.service;
 
 import com.dione.npjavaserver.dao.ChapterDAO;
 import com.dione.npjavaserver.dao.CharacDAO;
+import com.dione.npjavaserver.dao.EventDAO;
 import com.dione.npjavaserver.dao.PlotDAO;
 import com.dione.npjavaserver.dto.SearchDTO;
 import com.dione.npjavaserver.model.Chapter;
 import com.dione.npjavaserver.model.Charac;
+import com.dione.npjavaserver.model.Event;
 import com.dione.npjavaserver.model.Plot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +28,15 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private PlotDAO plotDAO;
 
+    @Autowired
+    private EventDAO eventDAO;
 
-    public SearchServiceImpl(CharacDAO charac, ChapterDAO chapter, PlotDAO plot) {
-        this.characDAO = charac;
-        this.chapterDAO = chapter;
-        this.plotDAO = plot;
+
+    public SearchServiceImpl(CharacDAO characDAO, ChapterDAO chapterDAO, PlotDAO plotDAO, EventDAO eventDAO) {
+        this.characDAO = characDAO;
+        this.chapterDAO = chapterDAO;
+        this.plotDAO = plotDAO;
+        this.eventDAO = eventDAO;
     }
 
     @Override //FIXME is this really necessary to have Plot with it as well, that would cause recursion?
@@ -100,6 +106,23 @@ public class SearchServiceImpl implements SearchService {
         return dto;
     }
 
+    //TODO testing
+    @Override
+    public List<SearchDTO> getCharactersByEventId(Long id) {
+        Event event = eventDAO.getReferenceById(id);
+        Set<Charac> characList = event.getCharacterSet();
+        List<SearchDTO> dto = new ArrayList<>();
+        for (Charac charac : characList) {
+            SearchDTO eventDTO = new SearchDTO();
+            eventDTO.setEventId(id);
+            eventDTO.setCharacterId(charac.getId());
+            eventDTO.setCharacterName(charac.getFirstName() + " " + charac.getLastName());
+            eventDTO.setEventName(event.getName());
+            dto.add(eventDTO);
+        }
+        return dto;
+    }
+
     @Override
     public List<SearchDTO> getPlotsByCharacterId(Long id) {
         Charac characs = characDAO.getReferenceById(id);
@@ -133,6 +156,22 @@ public class SearchServiceImpl implements SearchService {
         return dto;
     }
 
+    //TODO testing
+    @Override
+    public List<SearchDTO> getChaptersByEventId(Long id) {
+        Event event = eventDAO.getReferenceById(id);
+        Set<Chapter> chapterSet = event.getChapterSet();
+        List<SearchDTO> dto = new ArrayList<>();
+        for (Chapter chapter : chapterSet) {
+            SearchDTO chapterDto = new SearchDTO();
+            chapterDto.setEventId(id);
+            chapterDto.setChapterId(chapter.getId());
+            chapterDto.setChapterName(chapter.getName());
+            dto.add(chapterDto);
+        }
+        return dto;
+    }
+
     @Override
     public List<SearchDTO> getPlotsByChapterId(Long id) {
         Chapter chapter = chapterDAO.getReferenceById(id);
@@ -145,6 +184,71 @@ public class SearchServiceImpl implements SearchService {
             chapterDTO.setPlotId(plot.getId());
             chapterDTO.setPlotName(plot.getName());
             dto.add(chapterDTO);
+        }
+        return dto;
+    }
+//TODO testing
+    @Override
+    public List<SearchDTO> getPlotsByEventId(Long id) {
+        Event event = eventDAO.getReferenceById(id);
+        Set<Plot> plotList = event.getPlotSet();
+        List<SearchDTO> dto = new ArrayList<>();
+        for (Plot plot : plotList) {
+            SearchDTO plotDTO = new SearchDTO();
+            plotDTO.setEventId(id);
+            plotDTO.setEventName(event.getName());
+            plotDTO.setPlotId(plot.getId());
+            plotDTO.setPlotName(plot.getName());
+            dto.add(plotDTO);
+        }
+        return dto;
+    }
+
+    @Override
+    public List<SearchDTO> getEventsByChapterId(Long id) {
+        Chapter chapter = chapterDAO.getReferenceById(id);
+        Set<Event> eventList = chapter.getEventSet();
+        List<SearchDTO> dto = new ArrayList<>();
+        for (Event event : eventList) {
+            SearchDTO chapterDTO = new SearchDTO();
+            chapterDTO.setChapterId(id);
+            chapterDTO.setChapterName(chapter.getName());
+            chapterDTO.setEventId(event.getId());
+            chapterDTO.setEventName(event.getName());
+            dto.add(chapterDTO);
+        }
+        return dto;
+    }
+//TODO testing
+    @Override
+    public List<SearchDTO> getEventsByPlotId(Long id) {
+        Plot plot = plotDAO.getReferenceById(id);
+        Set<Event> eventSet = plot.getEventSet();
+        List<SearchDTO> dto = new ArrayList<>();
+        for (Event event : eventSet) {
+            SearchDTO plotDTO = new SearchDTO();
+            plotDTO.setPlotId(id);
+            plotDTO.setEventId(event.getId());
+            plotDTO.setEventName(event.getName());
+            plotDTO.setPlotName(plot.getName());
+            dto.add(plotDTO);
+        }
+        return dto;
+    }
+
+    @Override
+    public List<SearchDTO> getEventsByCharacterId(Long id) {
+        Charac characs = characDAO.getReferenceById(id);
+        Set<Event> events = characs.getEventSet();
+        List<SearchDTO> dto = new ArrayList<>();
+        for (Event event : events) {
+            SearchDTO eventDTO = new SearchDTO();
+            eventDTO.setCharacterId(id);
+            eventDTO.setChapterId(event.getId());
+            eventDTO.setChapterName(event.getName());
+            eventDTO.setCharacterName(characs.getFirstName() + " " + characs.getLastName());
+            dto.add(eventDTO);
+
         }
         return dto;
     }

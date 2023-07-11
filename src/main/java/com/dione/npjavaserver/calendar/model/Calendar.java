@@ -1,3 +1,4 @@
+/*
 package com.dione.npjavaserver.calendar.model;
 
 import javax.persistence.*;
@@ -102,3 +103,4 @@ public class Calendar {
         this.seconds = seconds;
     }
 }
+*/

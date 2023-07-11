@@ -15,9 +15,9 @@ public class EventDTO implements Serializable {
     private EventType type;
     private String location;
     private String description;
-    private Long year;
-    private Long month;
-    private Long day;
+    private Long years;
+    private Long months;
+    private Long days;
 
     public EventDTO() {
     }
@@ -29,16 +29,17 @@ public class EventDTO implements Serializable {
         this.description = description;
     }
 
-    public EventDTO(Long id, String name, EventType type, String location, String description, Long year, Long month, Long day) {
+    public EventDTO(Long id, String name, EventType type, String location, String description, Long years, Long months, Long days) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.location = location;
         this.description = description;
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        this.years = years;
+        this.months = months;
+        this.days = days;
     }
+
 
     public Long getId() {
         return id;
@@ -80,28 +81,28 @@ public class EventDTO implements Serializable {
         this.description = description;
     }
 
-    public Long getYear() {
-        return year;
+    public Long getYears() {
+        return years;
     }
 
-    public void setYear(Long year) {
-        this.year = year;
+    public void setYears(Long years) {
+        this.years = years;
     }
 
-    public Long getMonth() {
-        return month;
+    public Long getMonths() {
+        return months;
     }
 
-    public void setMonth(Long month) {
-        this.month = month;
+    public void setMonths(Long months) {
+        this.months = months;
     }
 
-    public Long getDay() {
-        return day;
+    public Long getDays() {
+        return days;
     }
 
-    public void setDay(Long day) {
-        this.day = day;
+    public void setDays(Long days) {
+        this.days = days;
     }
 
     @Override
@@ -114,14 +115,14 @@ public class EventDTO implements Serializable {
                 Objects.equals(this.type, entity.type) &&
                 Objects.equals(this.location, entity.location) &&
                 Objects.equals(this.description, entity.description) &&
-                Objects.equals(this.year, entity.year) &&
-                Objects.equals(this.month, entity.month) &&
-                Objects.equals(this.day, entity.day);
+                Objects.equals(this.years, entity.years) &&
+                Objects.equals(this.months, entity.months) &&
+                Objects.equals(this.days, entity.days);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, location, description, year, month, day);
+        return Objects.hash(id, name, type, location, description, years, months, days);
     }
 
     @Override
@@ -132,8 +133,8 @@ public class EventDTO implements Serializable {
                 "type = " + type + ", " +
                 "location = " + location + ", " +
                 "description = " + description + ", " +
-                "year = " + year + ", " +
-                "month = " + month + ", " +
-                "day = " + day + ")";
+                "year = " + years + ", " +
+                "month = " + months + ", " +
+                "day = " + days + ")";
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.dione.npjavaserver.calendar.controller;
 
 import com.dione.npjavaserver.calendar.model.Calendar;
@@ -92,3 +93,4 @@ public class CalendarController {
     }
 
 }
+*/

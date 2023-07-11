@@ -12,6 +12,8 @@ public class SearchDTO implements Serializable {
     private String chapterName;
     private Long plotId;
     private String plotName;
+    private Long EventId;
+    private String EventName;
 
     public SearchDTO() {
     }
@@ -62,6 +64,22 @@ public class SearchDTO implements Serializable {
 
     public void setPlotName(String plotName) {
         this.plotName = plotName;
+    }
+
+    public Long getEventId() {
+        return EventId;
+    }
+
+    public void setEventId(Long eventId) {
+        EventId = eventId;
+    }
+
+    public String getEventName() {
+        return EventName;
+    }
+
+    public void setEventName(String eventName) {
+        EventName = eventName;
     }
 
     @Override

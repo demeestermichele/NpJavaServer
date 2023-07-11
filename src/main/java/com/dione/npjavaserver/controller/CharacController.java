@@ -119,6 +119,12 @@ public class CharacController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    /**
+     * Using the ID of a character, display all Plots in which they are present
+     *
+     * @param id of the character whose plot list you wish to find.
+     * @return list of chapters
+     */
     @GetMapping("/{id}/plots")
     public ResponseEntity<List<SearchDTO>> getPlotsByCharacterId(@PathVariable Long id){
         try {

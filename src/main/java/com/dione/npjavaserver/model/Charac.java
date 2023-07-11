@@ -84,7 +84,7 @@ public class Charac implements Serializable {
             property = "id")
     @JsonManagedReference
     @JoinTable(name = "characters_events", joinColumns = @JoinColumn(name = "charac_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
+            inverseJoinColumns = @JoinColumn(name = "events_id"))
     private Set<Event> eventSet = new LinkedHashSet<>();
 
     /**
@@ -192,6 +192,14 @@ public class Charac implements Serializable {
 
     public void setPlotSet(Set<Plot> plotSet) {
         this.plotSet = plotSet;
+    }
+
+    public Set<Event> getEventSet() {
+        return eventSet;
+    }
+
+    public void setEventSet(Set<Event> eventSet) {
+        this.eventSet = eventSet;
     }
 
     /**

@@ -40,6 +40,10 @@ public class Plot implements Serializable {
     @JsonBackReference
     private Set<Chapter> chapterSet = new LinkedHashSet<>();
 
+    /**
+     * A chapter can have multiple plots, characters, etc..
+     * When in danger of recursion choose to display ID of Mapping
+     **/
     @ManyToMany(mappedBy = "chapterSet", cascade = CascadeType.ALL)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(
@@ -49,7 +53,7 @@ public class Plot implements Serializable {
     private Set<Charac> characterSet = new LinkedHashSet<>();
 
     /**
-     * A chapter can have multiple plots, characters, etc..
+     * An event can have multiple plots, characters, etc..
      * When in danger of recursion choose to display ID of Mapping
      **/
     @ManyToMany(cascade = CascadeType.ALL) //this model maps the chapters
@@ -57,7 +61,7 @@ public class Plot implements Serializable {
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
-    @JoinTable(name = "plots_events",joinColumns = @JoinColumn(name = "event_id"),
+    @JoinTable(name = "plots_events",joinColumns = @JoinColumn(name = "events_id"),
             inverseJoinColumns = @JoinColumn(name = "plot_id"))
     private Set<Event> eventSet = new LinkedHashSet<>();
 
@@ -127,5 +131,13 @@ public class Plot implements Serializable {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public Set<Event> getEventSet() {
+        return eventSet;
+    }
+
+    public void setEventSet(Set<Event> eventSet) {
+        this.eventSet = eventSet;
     }
 }

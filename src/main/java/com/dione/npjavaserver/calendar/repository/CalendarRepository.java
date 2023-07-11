@@ -1,3 +1,4 @@
+/*
 package com.dione.npjavaserver.calendar.repository;
 
 import com.dione.npjavaserver.calendar.model.Calendar;
@@ -11,3 +12,4 @@ public interface CalendarRepository extends CrudRepository<Calendar, Integer> {
     public Calendar findCalendarById(Long id);
     Set<Calendar> findByIdAndName(Long id, String name);
 }
+*/

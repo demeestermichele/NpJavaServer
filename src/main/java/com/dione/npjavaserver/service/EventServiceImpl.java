@@ -47,7 +47,7 @@ public class EventServiceImpl implements EventService {
         List<Event> events = eventDAO.findAll();
         List<EventDTO> dtos = new ArrayList<>();
         for (Event event : events) {
-            dtos.add(new EventDTO(event.getName(), event.getType(), event.getLocation(), event.getDescription()));
+            dtos.add(new EventDTO(event.getId(), event.getName(), event.getType(), event.getLocation(), event.getDescription(), event.getYears(), event.getMonths(), event.getDays() ));
         }
         return dtos;
     }
