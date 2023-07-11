@@ -244,8 +244,8 @@ public class SearchServiceImpl implements SearchService {
         for (Event event : events) {
             SearchDTO eventDTO = new SearchDTO();
             eventDTO.setCharacterId(id);
-            eventDTO.setChapterId(event.getId());
-            eventDTO.setChapterName(event.getName());
+            eventDTO.setEventId(event.getId());
+            eventDTO.setEventName(event.getName());
             eventDTO.setCharacterName(characs.getFirstName() + " " + characs.getLastName());
             dto.add(eventDTO);
 

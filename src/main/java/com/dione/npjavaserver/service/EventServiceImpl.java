@@ -29,6 +29,9 @@ public class EventServiceImpl implements EventService {
         eventDTO.setType(event.getType());
         eventDTO.setLocation(event.getLocation());
         eventDTO.setDescription(event.getDescription());
+        eventDTO.setYears(event.getYears());
+        eventDTO.setMonths(event.getMonths());
+        eventDTO.setDays(event.getDays());
         return eventDTO;
     }
 

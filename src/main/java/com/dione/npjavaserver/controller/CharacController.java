@@ -134,4 +134,14 @@ public class CharacController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/{id}/events")
+    public ResponseEntity<List<SearchDTO>> getEventsByCharacterId(@PathVariable Long id){
+        try {
+            List<SearchDTO> characters = ccService.getEventsByCharacterId(id);
+            return ResponseEntity.ok(characters);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
