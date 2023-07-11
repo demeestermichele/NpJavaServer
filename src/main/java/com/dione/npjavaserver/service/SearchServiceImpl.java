@@ -131,8 +131,8 @@ public class SearchServiceImpl implements SearchService {
         for (Plot plot : plots) {
             SearchDTO plotDTO = new SearchDTO();
             plotDTO.setCharacterId(id);
-            plotDTO.setChapterId(plot.getId());
-            plotDTO.setChapterName(plot.getName());
+            plotDTO.setPlotId(plot.getId());
+            plotDTO.setPlotName(plot.getName());
             plotDTO.setCharacterName(characs.getFirstName() + " " + characs.getLastName());
             dto.add(plotDTO);
 
