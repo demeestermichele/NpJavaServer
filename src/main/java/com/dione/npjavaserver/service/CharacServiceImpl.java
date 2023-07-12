@@ -3,6 +3,7 @@ package com.dione.npjavaserver.service;
 import com.dione.npjavaserver.dao.CharacDAO;
 import com.dione.npjavaserver.dto.CharacDTO;
 import com.dione.npjavaserver.model.Charac;
+import com.dione.npjavaserver.model.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,42 @@ public class CharacServiceImpl implements CharacService {
         characDAO.delete(charac);
     }
 
+    @Override
+    public List<CharacDTO> getChildrenByParentId(Long id) throws NotFoundException {
+        Charac parentCharacter = characDAO.findById(id).orElseThrow(NotFoundException::new);
+        List<Charac> characs = characDAO.findByMotherOrFather(parentCharacter, parentCharacter);
+        List<CharacDTO> childrenDTOList = new ArrayList<>();
+
+        for (Charac charac : characs) {
+
+            if (parentCharacter.getSex() == Sex.MALE) {
+                Charac mother = new Charac();
+                mother.setFirstName(charac.getMother().getFirstName());
+                charac.setMother(mother);
+                charac.setFather(null);
+                childrenDTOList.add(mapToDto(charac));
+            } else if (parentCharacter.getSex() == Sex.FEMALE){
+                Charac dad = new Charac();
+                dad.setFirstName(charac.getFather().getFirstName());
+                charac.setFather(dad);
+                charac.setMother(null);
+                childrenDTOList.add(mapToDto(charac));
+            }
+        }
+        System.out.println(childrenDTOList);
+        return childrenDTOList;
+    }
+
+    private CharacDTO mapToShortDto(Charac charac) {
+        CharacDTO characDto = new CharacDTO();
+        characDto.setId(charac.getId());
+        characDto.setFirstName(charac.getFirstName());
+        characDto.setLastName(charac.getLastName());
+        characDto.setSex(charac.getSex());
+
+        return characDto;
+    }
+
     private CharacDTO mapToDto(Charac charac) {
         CharacDTO characDto = new CharacDTO();
         characDto.setId(charac.getId());
@@ -90,6 +127,14 @@ public class CharacServiceImpl implements CharacService {
         }
         return characDto;
     }
+    private Charac mapToShortEntity(CharacDTO characDto) {
+        Charac charac = new Charac();
+        charac.setFirstName(characDto.getFirstName());
+        charac.setLastName(characDto.getLastName());
+        charac.setSex(charac.getSex());
+        return charac;
+    }
+
 
     private Charac mapToEntity(CharacDTO characDto) {
         Charac charac = new Charac();

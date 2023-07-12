@@ -11,4 +11,9 @@ import java.util.List;
 @Repository
 public interface CharacDAO extends JpaRepository<Charac, Long> {
 
+    List<Charac> findByFather(Charac charac);
+
+    List<Charac> findByMother(Charac charac);
+
+    List<Charac> findByMotherOrFather(Charac parentCharacter, Charac parentCharacter1);
 }

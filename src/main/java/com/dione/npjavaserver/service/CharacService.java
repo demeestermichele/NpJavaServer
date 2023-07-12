@@ -17,5 +17,6 @@ public interface CharacService {
     void deleteCharac(Long id) throws ChangeSetPersister.NotFoundException;
 
 
+    List<CharacDTO> getChildrenByParentId(Long id) throws ChangeSetPersister.NotFoundException;
 }
 

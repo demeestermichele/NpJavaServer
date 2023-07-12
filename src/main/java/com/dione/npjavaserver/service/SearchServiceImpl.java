@@ -106,7 +106,6 @@ public class SearchServiceImpl implements SearchService {
         return dto;
     }
 
-    //TODO testing
     @Override
     public List<SearchDTO> getCharactersByEventId(Long id) {
         Event event = eventDAO.getReferenceById(id);
@@ -156,7 +155,6 @@ public class SearchServiceImpl implements SearchService {
         return dto;
     }
 
-    //TODO testing
     @Override
     public List<SearchDTO> getChaptersByEventId(Long id) {
         Event event = eventDAO.getReferenceById(id);
@@ -187,7 +185,6 @@ public class SearchServiceImpl implements SearchService {
         }
         return dto;
     }
-//TODO testing
     @Override
     public List<SearchDTO> getPlotsByEventId(Long id) {
         Event event = eventDAO.getReferenceById(id);
@@ -219,7 +216,6 @@ public class SearchServiceImpl implements SearchService {
         }
         return dto;
     }
-//TODO testing
     @Override
     public List<SearchDTO> getEventsByPlotId(Long id) {
         Plot plot = plotDAO.getReferenceById(id);

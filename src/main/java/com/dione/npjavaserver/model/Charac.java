@@ -211,10 +211,10 @@ public class Charac implements Serializable {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", sex=" + sex +
+                /*", sex=" + sex +
                 ", role=" + role +
                 ", mother=" + mother +
-                ", father=" + father +
+                ", father=" + father +*/
                 '}';
     }
 }
